@@ -1,0 +1,9 @@
+{
+  "class-route-path": true,
+  "scan-path": "routes",
+  "route-property": "autowired",
+  "interceptor": {
+    "Interceptor": "manage"
+  },
+  "override": "override.js"
+}

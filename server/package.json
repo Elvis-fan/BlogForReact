@@ -1,20 +1,31 @@
 {
   "name": "server",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-dev ./src/main.ts"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "express-myconnection": "^1.0.4",
-    "jade": "~1.11.0",
-    "morgan": "~1.8.1",
-    "mysql": "^2.14.1",
-    "serve-favicon": "~2.4.2",
-    "supervisor": "^0.12.0"
+    "@types/jwt-simple": "^0.5.33",
+    "@types/mongodb": "^3.1.2",
+    "@types/multiparty": "0.0.31",
+    "bluebird": "^3.5.1",
+    "fs": "0.0.1-security",
+    "jwt-simple": "^0.5.1",
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "koa2_autowired_route": "0.0.51",
+    "mongodb": "^3.1.1",
+    "multiparty": "^4.1.3",
+    "mysql2": "^1.5.2",
+    "path": "^0.12.7",
+    "promise-mysql": "^3.2.1",
+    "ts-node": "^5.0.1",
+    "ts-node-dev": "^1.0.0-pre.26",
+    "typings": "^2.1.1"
   }
 }

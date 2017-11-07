@@ -1,0 +1,5 @@
+const ON_CURTAIN = 'ON_CURTAIN'
+const OFF_CURTAIN = 'OFF_CURTAIN'
+export {
+    ON_CURTAIN, OFF_CURTAIN
+}

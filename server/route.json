@@ -1,5 +1,0 @@
-{
-  "class-route-path":true,
-  "scan-path":"routes",
-  "route-property":"autowired"
-}

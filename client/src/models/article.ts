@@ -1,0 +1,10 @@
+export interface Article {
+  id: string,
+  title: string,
+  author:string,
+  cover: string,
+  images: string[],
+  date: string,
+  briefing: string,
+  content: string
+}

@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "build/dist",
+    "paths": {
+      "@/*": ["src/*"],
+      "@common": ["src/common/*"]
+    },
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
+    "experimentalDecorators": true,
     "lib": ["es6", "dom"],
     "sourceMap": true,
     "allowJs": true,
@@ -26,7 +31,7 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
+    "doc/src/setupTests.ts"
   ],
   "types": [
     "typePatches"
