@@ -9,12 +9,12 @@ const mapStateToProps = (state: any, ownProps: any) => {
     const { Career } = state
     let topArticle
     let topArticles
-    if(Career.topArticles.length===5){
-        topArticle=Career.topArticles[0]
-        topArticles=Career.topArticles.concat().splice(1,4)
-    }else{
-        topArticle={}
-        topArticles=Career.topArticles
+    if (Career.topArticles.length === 5) {
+        topArticle = Career.topArticles[0]
+        topArticles = Career.topArticles.concat().splice(1, 4)
+    } else {
+        topArticle = {}
+        topArticles = Career.topArticles
     }
     return ({
         classes: Career.classes,
@@ -29,15 +29,15 @@ const mapDispatchToProps = (dispatch: any) => ({
     fetchClasses: (payload: any) => dispatch(classesAction(payload)),
     fetchTopArticles: (payload: any) => dispatch(topArticlesAction(payload)),
 })
-interface Props{
+interface Props {
     classes: any,
-        mainArticles:any,
-        topArticle:ArticleModel,
-        topArticles:ArticleModel[],
-        loadingArticles: boolean,
-        fetchArticles({ type, page, size }:{type:number, page:number, size:number}):void,
-        fetchClasses(pid:number):void,
-        fetchTopArticles(pid:number):void,
+    mainArticles: any,
+    topArticle: ArticleModel,
+    topArticles: ArticleModel[],
+    loadingArticles: boolean,
+    fetchArticles({ type, page, size }: { type: number, page: number, size: number, more?: boolean }): void,
+    fetchClasses(pid: number): void,
+    fetchTopArticles(pid: number): void,
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class Career extends React.Component<Props, any> {
@@ -55,14 +55,15 @@ export default class Career extends React.Component<Props, any> {
 
     menuClick = ({ key }: any) => {
         const [classesId] = key.split('menu')
-        this.props.fetchArticles({ type: classesId, page: 0, size: this.size })
+        this.page = 0
+        this.props.fetchArticles({ type: classesId, page: this.page, size: this.size })
     }
     render() {
         const readMore = () => {
-            this.props.fetchArticles({ type: 1, page: this.page++, size: this.size })
+            this.props.fetchArticles({ type: 1, page: ++this.page, size: this.size, more: true })
         }
         const { menuClick } = this
-        const { classes, mainArticles, loadingArticles, topArticles,topArticle } = this.props
+        const { classes, mainArticles, loadingArticles, topArticles, topArticle } = this.props
         return <div className='career'>
             <section className='top-wrap'>
                 <div className='content'>
@@ -73,25 +74,25 @@ export default class Career extends React.Component<Props, any> {
                                     <h1><a href={`/career/details/${topArticle.id}`}>{topArticle.title}</a></h1>
                                 </div>
                                 <div className='font-6'>
-                                    <span>{topArticle.author||'MR-Liu'}   |  {topArticle.date}</span>
+                                    <span>{topArticle.author || 'MR-Liu'}   |  {topArticle.date}</span>
                                 </div>
                                 <div className='font-7'>
                                     {topArticle.briefing}
-                                                    </div>
+                                </div>
 
                             </article>
                         </Col>
                         <Col xs={{ span: 12 }}>
-                        {
-                            topArticles.map(article=>(<article>
-                                <div>
-                                    <h1><a href={`/career/details/${article.id}`}>{article.title}</a></h1>
-                                </div>
-                                <div className='font-6'>
-                                <span>{article.author||'MR-Liu'}   |  {article.date}</span>
-                                </div>
-                            </article>))
-                        }
+                            {
+                                topArticles.map(article => (<article>
+                                    <div>
+                                        <h1><a href={`/career/details/${article.id}`}>{article.title}</a></h1>
+                                    </div>
+                                    <div className='font-6'>
+                                        <span>{article.author || 'MR-Liu'}   |  {article.date}</span>
+                                    </div>
+                                </article>))
+                            }
                         </Col>
                     </Row>
                 </div>

@@ -1,7 +1,8 @@
 import { CLASSES_TYPE, ARTICLES_TYPE, TOP_ARTICLES_TYPE } from 'src/action-types'
 interface Action {
     type: string,
-    payload: any[]
+    payload: any[],
+    more: boolean
 }
 interface CareerState {
     classes: any[],
@@ -21,9 +22,12 @@ export const Career = (state: CareerState = careerState, action: Action) => {
         case CLASSES_TYPE.FETCH_SUCCESS:
             return Object.assign({}, state, { classes: action.payload })
         case ARTICLES_TYPE.FETCH_SUCCESS:
-            return Object.assign({}, state, { loadingArticles: false, mainArticles: [...state.mainArticles, ...action.payload] })
+            if (action.more) {
+                action.payload = [...state.mainArticles, ...action.payload]
+            }
+            return Object.assign({}, state, { loadingArticles: false, mainArticles: [...action.payload] })
         case TOP_ARTICLES_TYPE.FETCH_SUCCESS:
-            return Object.assign({}, state, { topArticles: [...state.topArticles, ...action.payload] })
+            return Object.assign({}, state, { topArticles: [...action.payload] })
         case ARTICLES_TYPE.FETCH_REQUEST:
             return Object.assign({}, state, { loadingArticles: true })
         default:

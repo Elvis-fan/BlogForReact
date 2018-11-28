@@ -8,7 +8,7 @@ export const fetchArticles = function* (action: any) {
     try {
         yield put({ type: ARTICLES_TYPE.FETCH_REQUEST, payload: 123 })
         const response = yield call(fetchArticlesApi, action.payload)
-        yield put({ type: ARTICLES_TYPE.FETCH_SUCCESS, payload: response })
+        yield put({ type: ARTICLES_TYPE.FETCH_SUCCESS, payload: response, more: action.payload.more || false })
     } catch (e) {
         yield put({ type: ARTICLES_TYPE.FETCH_FAILURE, payload: '123' })
     }

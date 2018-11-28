@@ -1,0 +1,112 @@
+@import "~src/common/style/less/const.less";
+.blog-menu {
+    padding-left: 0;
+    li {
+        position: relative; //margin-top: 4px;
+        margin-bottom: 8px;
+        transition: color .3s cubic-bezier(.645, .045, .355, 1), border-color .3s cubic-bezier(.645, .045, .355, 1), background .3s cubic-bezier(.645, .045, .355, 1), padding .15s cubic-bezier(.645, .045, .355, 1);
+        .menu-title {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: @s_spacing @m_spacing @s_spacing @l_spacing;
+            &:active {
+                background-color: @primary-color-1;
+            }
+        }
+        &.blog-menu-item.active {
+            background-color: @primary-color-1;
+        }
+        &.blog-menu-item.active {
+            &:after {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+            .menu-title {
+                color: @primary-color;
+                z-index: 1;
+            }
+        }
+        &.blog-menu-item:after {
+            right: 0;
+            border-left: 3px solid @primary-color;
+            transform: scaleY(.0001);
+            opacity: 0;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            transition: transform .15s cubic-bezier(.215, .61, .355, 1), opacity .15s cubic-bezier(.215, .61, .355, 1);
+        }
+    }
+    .menu-arrow {
+        transition: transform .3s cubic-bezier(.645, .045, .355, 1);
+        position: absolute;
+        top: 50%;
+        width: 10px;
+        right: 16px;
+    }
+    .blog-submenu.open .menu-arrow {
+        transform: translateY(-2px);
+    }
+    .menu-arrow:before,
+    .menu-arrow:after {
+        content: '';
+        position: absolute;
+        vertical-align: baseline;
+        background: #fff;
+        background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.65)), to(rgba(0, 0, 0, 0.65)));
+        background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+        width: 6px;
+        height: 2px;
+        border-radius: 2px;
+        -webkit-transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), top 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), top 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), top 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), top 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), -webkit-transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    .menu-title:hover .menu-arrow:before,
+    .menu-title:hover .menu-arrow:after {
+        background: linear-gradient(to right, @primary-color, @primary-color);
+    }
+    .menu-arrow:before {
+        transform: rotate(-45deg) translateX(2px);
+    }
+    .menu-arrow:after {
+        transform: rotate(45deg) translateX(-2px);
+    }
+    .blog-submenu.open>.menu-title>.menu-arrow:after {
+        transform: rotate(-45deg) translateX(-2px);
+    }
+    .blog-submenu.open>.menu-title>.menu-arrow:before {
+        transform: rotate(45deg) translateX(2px);
+    }
+}
+
+.blog-submenu>ul {
+    background-color: #fff;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.blog-submenu.off>ul {
+    display: none;
+}
+
+.blog-submenu.open>ul {
+    margin-top: 8px;
+}
+
+.blog-submenu.open {
+    margin-bottom: 0;
+}
+
+.blog-menu-item.active .article-setting {
+    display: block;
+    opacity: 1;
+    z-index: 1;
+}
+
+.blog-menu-item.active .article-setting:hover {
+    color: saturate(@primary-color, 90%);
+}

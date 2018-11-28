@@ -1,4 +1,4 @@
-import { Home, About, Career } from 'src/layouts'
+import { Home, About, Career, Administrator } from 'src/layouts'
 const routes = [
     {
         url: '/',
@@ -15,6 +15,11 @@ const routes = [
         exact: true,
         title: '博客',
         component: Career
+    }, {
+        url: '/administrator',
+        exact: true,
+        title: '管理',
+        component: Administrator
     }
 ]
 export default routes
