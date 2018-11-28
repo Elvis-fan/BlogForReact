@@ -30,14 +30,14 @@ const mapDispatchToProps = (dispatch: any) => ({
     fetchTopArticles: (payload: any) => dispatch(topArticlesAction(payload)),
 })
 interface Props {
-    classes: any,
-    mainArticles: any,
-    topArticle: ArticleModel,
-    topArticles: ArticleModel[],
-    loadingArticles: boolean,
-    fetchArticles({ type, page, size }: { type: number, page: number, size: number, more?: boolean }): void,
-    fetchClasses(pid: number): void,
-    fetchTopArticles(pid: number): void,
+    classes: any
+    mainArticles: any
+    topArticle: ArticleModel
+    topArticles: ArticleModel[]
+    loadingArticles: boolean
+    fetchArticles({ type, page, size }: { type: number, page: number, size: number, more?: boolean }): void
+    fetchClasses(pid: number): void
+    fetchTopArticles(pid: number): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class Career extends React.Component<Props, any> {

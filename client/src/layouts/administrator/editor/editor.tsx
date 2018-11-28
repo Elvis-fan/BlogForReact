@@ -1,11 +1,24 @@
 import * as React from 'react'
-import { Menu, Icon, Row, Col } from 'antd'
+import { Menu, Icon, Row, Col,Button } from 'antd'
+import { connect } from 'react-redux'
 import BEditor from 'braft-editor'
+import {classesAction} from 'src/actions'
 import { BlogMenu } from '@/components'
 import 'braft-editor/dist/index.css'
 const BraftEditor: any = BEditor
 const Item = BlogMenu.Item
-export default class Editor extends React.Component<any, any>{
+const mapStateToProps = (state: any, ownProps: any) => {
+    console.log(state)
+    return {}
+}
+const mapDispatchToProps = (dispatch: any) => ({
+    fetchClasses: (payload: any) => dispatch(classesAction(payload)),
+})
+interface Props{
+    fetchClasses(pid: number): void
+}
+@(connect(mapStateToProps, mapDispatchToProps) as any)
+export default class Editor extends React.Component<Props&any, any>{
     state: any = {
         editorState: null,
     }
@@ -21,10 +34,13 @@ export default class Editor extends React.Component<any, any>{
     }
 
     render() {
-        const q = () => { }
+        const q = () => {
+            this.props.fetchClasses(0)
+         }
         const { editorState } = this.state
         return <Row className='editor'>
             <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-sidebar'>
+                <Button onClick={q}>123</Button>
                 <BlogMenu onClick={q} defaultSelectedKeys={['article0']}>
                     <Item>123</Item>
 

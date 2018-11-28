@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { test } from 'src/common/actions'
 import { stores } from 'src/common/stores'
 interface HomeProps {
     test: any
@@ -10,7 +9,7 @@ class Home extends React.Component<HomeProps, any> {
     public render() {
         const { test } = this.props
 
-        test()
+        // test()
 
         return <div>
             12
@@ -23,6 +22,6 @@ const mapStateToProps = (state: any) => {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-    test: () => test()(stores.dispatch)
+    // test: () => test()(stores.dispatch)
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
