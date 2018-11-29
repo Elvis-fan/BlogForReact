@@ -6,7 +6,7 @@ import { articlesAction, classesAction, topArticlesAction } from './actions'
 import { Article as ArticleModel } from '@/models'
 import './career.less'
 const mapStateToProps = (state: any, ownProps: any) => {
-    const { Career } = state
+    const { Career, Classes } = state
     let topArticle
     let topArticles
     if (Career.topArticles.length === 5) {
@@ -17,7 +17,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
         topArticles = Career.topArticles
     }
     return ({
-        classes: Career.classes,
+        classes: Classes.classes,
         mainArticles: Career.mainArticles,
         topArticle,
         topArticles,

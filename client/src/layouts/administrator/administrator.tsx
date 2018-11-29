@@ -1,17 +1,23 @@
 import * as React from 'react'
-import Editor from './editor/editor'
+import { Route, Switch } from 'react-router-dom'
+import Editor from './editor'
 import { connect } from 'react-redux'
-const mapStateToProps = (state: any, ownProps: any) => {
-    return {}
-}
-const mapDispatchToProps = (dispatch: any) => ({
-    
-})
-@(connect(mapStateToProps, mapDispatchToProps) as any)
+
+const routes = [
+    {
+        url: '/administrator/editor',
+        exact: true,
+        title: '杂项',
+        component: Editor
+    }
+]
+
 export default class Administrator extends React.Component<any, any>{
     render() {
         return <div>
-            <Editor />
+            {
+                routes.map(route => <Route key={route.url} exact={route.exact} component={route.component} path={route.url} />)
+            }
         </div>
     }
 }

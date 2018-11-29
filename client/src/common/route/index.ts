@@ -17,7 +17,7 @@ const routes = [
         component: Career
     }, {
         url: '/administrator',
-        exact: true,
+        exact: false,
         title: '管理',
         component: Administrator
     }

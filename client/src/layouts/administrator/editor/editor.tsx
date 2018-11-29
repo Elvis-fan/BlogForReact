@@ -1,26 +1,34 @@
 import * as React from 'react'
-import { Menu, Icon, Row, Col,Button } from 'antd'
+import { Menu, Icon, Row, Col, Button } from 'antd'
 import { connect } from 'react-redux'
 import BEditor from 'braft-editor'
-import {classesAction} from 'src/actions'
+import { classesAction } from 'src/actions'
+import { Classes as ClassesModel } from 'src/models'
 import { BlogMenu } from '@/components'
 import 'braft-editor/dist/index.css'
 const BraftEditor: any = BEditor
-const Item = BlogMenu.Item
+const { Item, SubMenu } = BlogMenu
 const mapStateToProps = (state: any, ownProps: any) => {
-    console.log(state)
-    return {}
+    const { Classes } = state
+    return {
+        classes: Classes.classes,
+    }
 }
 const mapDispatchToProps = (dispatch: any) => ({
-    fetchClasses: (payload: any) => dispatch(classesAction(payload)),
+    fetchClasses: (id: string, child: number = 0) => dispatch(classesAction({ id, child })),
 })
-interface Props{
-    fetchClasses(pid: number): void
+interface Props {
+    classes: ClassesModel[]
+    fetchClasses(pid: number | string, option?: { child: boolean }): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
-export default class Editor extends React.Component<Props&any, any>{
+export default class Editor extends React.Component<Props, any>{
     state: any = {
         editorState: null,
+    }
+    componentWillMount() {
+        const { fetchClasses } = this.props
+        fetchClasses(0)
     }
     handleEditorChange = (editorState: any) => {
         this.setState({ editorState })
@@ -32,30 +40,34 @@ export default class Editor extends React.Component<Props&any, any>{
         console.log(htmlContent)
         // const result = await saveEditorContent(htmlContent)
     }
+    subMenuCLick = ({ key }: any) => {
+        const { fetchClasses }: Props = this.props
+        fetchClasses(key, { child: true })
+    }
 
     render() {
-        const q = () => {
-            this.props.fetchClasses(0)
-         }
+        const { classes, fetchClasses }: Props = this.props
+        const { subMenuCLick } = this
+        const q = ({ key }: any) => {
+            console.log(key)
+        }
         const { editorState } = this.state
         return <Row className='editor'>
             <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-sidebar'>
-                <Button onClick={q}>123</Button>
-                <BlogMenu onClick={q} defaultSelectedKeys={['article0']}>
-                    <Item>123</Item>
 
-                </BlogMenu>
                 <Menu
-
+                    onClick={q}
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                     mode='inline'
                 >
-                    <Menu.Item key='3'>
-                        <div>1231</div>
-                        <div>12312</div>
-                    </Menu.Item>
-                    <Menu.Item key='4'>Option 4</Menu.Item>
+                    {
+                        classes.map(value => <Menu.SubMenu key={value.id} title={value.name} onTitleClick={subMenuCLick}>
+                            {
+                                value.children && value.children.map(v1 => <Menu.Item key={v1.id}>{v1.name}</Menu.Item>)
+                            }
+                        </Menu.SubMenu>)
+                    }
                 </Menu>
             </Col>
             <Col xs={{ span: 17 }} sm={{ span: 17 }} md={{ span: 17 }} lg={{ span: 17 }} className='editor-viewport'>

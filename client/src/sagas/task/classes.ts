@@ -6,7 +6,7 @@ import {
 export const fetchClasses = function* (action: any) {
     try {
         yield put({ type: CLASSES_TYPE.FETCH_REQUEST, payload: {} })
-        const response = yield call(fetchClassesApi, action.payload)
+        const response = yield call(fetchClassesApi, { ...action.payload })
         yield put({ type: CLASSES_TYPE.FETCH_SUCCESS, payload: response })
     } catch (e) {
         yield put({ type: CLASSES_TYPE.FETCH_FAILURE, payload: {} })

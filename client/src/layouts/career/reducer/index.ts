@@ -1,4 +1,4 @@
-import { CLASSES_TYPE, ARTICLES_TYPE, TOP_ARTICLES_TYPE } from 'src/action-types'
+import { ARTICLES_TYPE, TOP_ARTICLES_TYPE } from 'src/action-types'
 interface Action {
     type: string,
     payload: any[],
@@ -19,8 +19,6 @@ const careerState: CareerState = {
 }
 export const Career = (state: CareerState = careerState, action: Action) => {
     switch (action.type) {
-        case CLASSES_TYPE.FETCH_SUCCESS:
-            return Object.assign({}, state, { classes: action.payload })
         case ARTICLES_TYPE.FETCH_SUCCESS:
             if (action.more) {
                 action.payload = [...state.mainArticles, ...action.payload]
