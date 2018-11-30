@@ -8,9 +8,12 @@ export class Classes {
     @Route({ path: 'getClasses/:pid/:child', type: TYPE.GET, })
     async getClasses({ params }) {
         const { pid, child } = params
-        if(Number(child)){
-            console.log(123)
+        const parents = await this.collection.find({ pid }, { projection: { _id: 0 } }).toArray()
+        if (Number(child)) {
+            for (let parent of parents) {
+          parent.children = await this.collection.find({ pid: parent.id }, { projection: { _id: 0 } }).toArray()
+            }
         }
-        return await this.collection.find({ pid }, { projection: { _id: 0 } }).toArray()
+        return parents
     }
 }

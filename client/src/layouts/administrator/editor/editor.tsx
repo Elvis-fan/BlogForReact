@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 })
 interface Props {
     classes: ClassesModel[]
-    fetchClasses(pid: number | string, option?: { child: boolean }): void
+    fetchClasses(pid: number | string, child?: number): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class Editor extends React.Component<Props, any>{
@@ -28,7 +28,7 @@ export default class Editor extends React.Component<Props, any>{
     }
     componentWillMount() {
         const { fetchClasses } = this.props
-        fetchClasses(0)
+        fetchClasses(0,1)
     }
     handleEditorChange = (editorState: any) => {
         this.setState({ editorState })
@@ -40,14 +40,14 @@ export default class Editor extends React.Component<Props, any>{
         console.log(htmlContent)
         // const result = await saveEditorContent(htmlContent)
     }
-    subMenuCLick = ({ key }: any) => {
-        const { fetchClasses }: Props = this.props
-        fetchClasses(key, { child: true })
-    }
+    // subMenuCLick = ({ key }: any) => {
+    //     const { fetchClasses }: Props = this.props
+    //     fetchClasses(key, { child: true })
+    // }
 
     render() {
         const { classes, fetchClasses }: Props = this.props
-        const { subMenuCLick } = this
+        // const { subMenuCLick } = this
         const q = ({ key }: any) => {
             console.log(key)
         }
@@ -62,7 +62,7 @@ export default class Editor extends React.Component<Props, any>{
                     mode='inline'
                 >
                     {
-                        classes.map(value => <Menu.SubMenu key={value.id} title={value.name} onTitleClick={subMenuCLick}>
+                        classes.map(value => <Menu.SubMenu key={value.id} title={value.name}>
                             {
                                 value.children && value.children.map(v1 => <Menu.Item key={v1.id}>{v1.name}</Menu.Item>)
                             }
