@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { BlockPicker } from 'react-color';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './editor.less';
-import { Row, Col, Button, Menu, Pagination, Icon, Input,Dropdown } from 'antd';
+import { Row, Col, Button, Menu, Pagination, Icon, Input, Dropdown } from 'antd';
 
 import { URL, ManageURL } from './../components/config';
-import  { Component } from 'react';
+import { Component } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import {http} from './../util/util';
+import { http } from './../util/util';
 
 import BlogMenu from './../components/blogMenu';
 
@@ -98,33 +98,35 @@ Date.prototype.format = function (format) {
 class EditorCustomizedToolbarOption extends React.Component {
     state = {
         classes: new Map(),
-        articles:[],
-        selArticle:undefined,
+        articles: [],
+        selArticle: undefined,
         editorState: EditorState.createEmpty(),
-        article:{},
-        id:undefined,
+        article: {},
+        id: undefined,
         // content:'',
-        title:'',
-        date:new Date(),
-        type:undefined
+        title: '',
+        date: new Date(),
+        type: undefined
     }
 
     static defaultProps = {
-        getArticlesURL : 'article/getArticles/',
-        getClassesURL : 'classes/getClasses/',
-        getArticleURL : 'article/getArticle/'
+        getArticlesURL: 'article/getArticles/',
+        getClassesURL: 'classes/getClasses/',
+        getArticleURL: 'article/getArticle/'
     }
-    constructor(props){
+    constructor(props) {
         super(props);
 
-        this.menuItemClick({key: '0'}, (data)=>{
-            this.getArticle(data[0].id,(data)=>{
-                if(data.length>0){
+        this.menuItemClick({ key: '0' }, (data) => {
+            this.getArticle(data[0].id, (data) => {
+                if (data.length > 0) {
 
                     this.article = data[0];
 
-                    this.setState({selArticle: {index:0,id:data[0].id},
-                        editorState: this.getEditorState(data[0].content)});
+                    this.setState({
+                        selArticle: { index: 0, id: data[0].id },
+                        editorState: this.getEditorState(data[0].content)
+                    });
 
                 }
             });
@@ -134,27 +136,27 @@ class EditorCustomizedToolbarOption extends React.Component {
 
     //获取菜单
     getClasses = (classes, callback) => {
-        return fetch( URL + this.props.getClassesURL + classes ).then(response => response.json())
+        return fetch(URL + this.props.getClassesURL + classes).then(response => response.json())
             .then(data => callback(data))
             .catch(e => console.log('Oops, error', e));
     }
     getArticles = (type, page, size, callback) => {
-        return fetch( URL + this.props.getArticlesURL + `${type}/${page}/${size}` ).then(response => response.json())
+        return fetch(URL + this.props.getArticlesURL + `${type}/${page}/${size}`).then(response => response.json())
             .then(data => callback(data))
             .catch(e => console.log('Oops, error', e));
     }
 
     getArticle = (id, callback) => {
-        return fetch(  `${URL}${this.props.getArticleURL}${id}` ).then(response => response.json())
+        return fetch(`${URL}${this.props.getArticleURL}${id}`).then(response => response.json())
             .then(data => callback(data))
         // .catch(e => console.log('Oops, error', e));
     }
 
-    setArticle = (article)=>{
+    setArticle = (article) => {
 
         this.setState({
 
-            id:article.id,
+            id: article.id,
             type: article.type,
             title: article.title,
             date: article.date,
@@ -164,26 +166,26 @@ class EditorCustomizedToolbarOption extends React.Component {
     }
 
     //菜单动作
-    menuItemClick = (e,args) =>{
+    menuItemClick = (e, args) => {
         let type = e.key;
         this.selClasses = e.key;
-        this.getArticles(type, 0, 1000, (data)=>{
-            this.setState({articles:data});
-            if(typeof args === 'function'){
+        this.getArticles(type, 0, 1000, (data) => {
+            this.setState({ articles: data });
+            if (typeof args === 'function') {
                 args(data);
             }
         });
 
     }
 
-    articlesItemClick = (e)=>{
+    articlesItemClick = (e) => {
 
         const item = JSON.parse(e.item.props.data);
 
-        this.getArticle(item.id,(data)=>{
-            if(data.length>0){
+        this.getArticle(item.id, (data) => {
+            if (data.length > 0) {
                 this.article = data[0];
-                console.log(this.article );
+                console.log(this.article);
                 this.setState({
                     selArticle: item,
                     editorState: this.getEditorState(data[0].content)
@@ -191,62 +193,63 @@ class EditorCustomizedToolbarOption extends React.Component {
             }
         });
     }
-    articleClick(e){
+    articleClick(e) {
         console.log(e);
         console.log(this.article);
-        if(e.key === '1'){// 发布
+        if (e.key === '1') {// 发布
 
-        }else if(e.key === '0'){ //移动
+        } else if (e.key === '0') { //移动
 
-        }else if(e.key === '2'){//删除
+        } else if (e.key === '2') {//删除
 
         }
     }
     newClick = (e) => {
         const key = e.key;
-        if(key === '0'){
+        if (key === '0') {
             let articles = this.state.articles;
             this.article = {
-                id:'',
-                title:'无标题',
-                date:   new Date().format('M.d.y'),
-                briefing:'',
-                type:this.selClasses
+                id: '',
+                title: '无标题',
+                date: new Date().format('M.d.y'),
+                briefing: '',
+                type: this.selClasses
             };
             articles.unshift(this.article);
             this.setState({
                 editorState: this.getEditorState(''),
-                articles:articles},()=>{
+                articles: articles
+            }, () => {
 
-                    console.log(this.refs);
-                    this.refs.editor_title.select();
+                console.log(this.refs);
+                this.refs.editor_title.select();
 
             });
 
-        }else{
+        } else {
 
         }
     };
     classesEdit = (e) => {
         console.log(e);
         const key = e.key.split('#');
-        if(key[0]==='重命名'){
+        if (key[0] === '重命名') {
 
-        }else if(key[0]==='删除'){
+        } else if (key[0] === '删除') {
 
-        }else if(key[0]==='移动'){
+        } else if (key[0] === '移动') {
 
         }
         console.log(key);
     }
-    editorBlur=(e)=>{
+    editorBlur = (e) => {
         this.article.content = this.htmlFormat(draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())));
 
         this.uploadArticle();
     }
 
     //编辑器
-    getEditorState = (text)=>{
+    getEditorState = (text) => {
         const contentBlock = htmlToDraft(text);
         if (contentBlock) {
             const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
@@ -256,15 +259,15 @@ class EditorCustomizedToolbarOption extends React.Component {
     //编辑器
     onEditorStateChange = (editorState) => {
         this.setState({
-            editorState:editorState,
+            editorState: editorState,
         });
     };
     //编辑器
-    htmlFormat = ( text) => {
-        for(let i=1;i<7;i++){
-            let tex = text.split(new RegExp(`<h${i}`,'ig'));
-            text=tex[0];
-            for(let j=1;j<tex.length;j++){
+    htmlFormat = (text) => {
+        for (let i = 1; i < 7; i++) {
+            let tex = text.split(new RegExp(`<h${i}`, 'ig'));
+            text = tex[0];
+            for (let j = 1; j < tex.length; j++) {
                 text += `<h${i} id="h${i}-${j}" ${tex[j]}`;
             }
         }
@@ -277,25 +280,25 @@ class EditorCustomizedToolbarOption extends React.Component {
     uploadArticle = () => {
 
         let article = {
-            id:this.article.id,
-            title:this.article.title,
-            type:this.article.type,
-            date:new Date(),
+            id: this.article.id,
+            title: this.article.title,
+            type: this.article.type,
+            date: new Date(),
             content: this.htmlFormat(draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())))
         };
 
         let articles = this.state.articles;
 
         articles[this.state.selArticle.index] = {
-            id:article.id,
-            title:article.title,
-            type:article.type,
-            date:article.date.getMonth()+'.'+article.date.getDate()+'.'+article.date.getFullYear(),
-            briefing:article.content.replace(/<(?:.|\s)*?>/g,'')
+            id: article.id,
+            title: article.title,
+            type: article.type,
+            date: article.date.getMonth() + '.' + article.date.getDate() + '.' + article.date.getFullYear(),
+            briefing: article.content.replace(/<(?:.|\s)*?>/g, '')
         }
         this.article = article;
 
-        this.setState({articles: articles});
+        this.setState({ articles: articles });
 
         // http.post(`${ManageURL}article/update`,JSON.stringify(article)).then(data=>{
         //     console.log(data);
@@ -326,67 +329,67 @@ class EditorCustomizedToolbarOption extends React.Component {
     }
 
 
-     classes = (type) => {
+    classes = (type) => {
 
-    let cl = this.state.classes.get(type+'');
-    let tem = [];
-    if (cl === undefined) {
-        this.getClasses(type, (data) => {
-            let classes = this.state.classes;
-            classes.set(type+'',data);
-            this.setState({classes: classes});
-        });
-    }else{
-        for (let d of cl) {
-            if (d.has_child === 0) {
-                tem.push(<Menu.Item key={d.id}>
-                    <Dropdown overlay={(
-                        <Menu onClick={this.classesEdit} data={JSON.stringify(d)}>
-                            {
-                                (()=>{
-                                    let tems = [];
-                                    for(let tem of ['重命名','删除','移动']){
-                                        tems.push(<Menu.Item key={`${tem}#${d.id}`}>{tem}</Menu.Item>)
-                                    }
-                                    return tems;
-                                })()
-                            }
-                        </Menu>
-                    )} trigger={['contextMenu']}>
-                        <div>{d.name}</div>
-                    </Dropdown>
+        let cl = this.state.classes.get(type + '');
+        let tem = [];
+        if (cl === undefined) {
+            this.getClasses(type, (data) => {
+                let classes = this.state.classes;
+                classes.set(type + '', data);
+                this.setState({ classes: classes });
+            });
+        } else {
+            for (let d of cl) {
+                if (d.has_child === 0) {
+                    tem.push(<Menu.Item key={d.id}>
+                        <Dropdown overlay={(
+                            <Menu onClick={this.classesEdit} data={JSON.stringify(d)}>
+                                {
+                                    (() => {
+                                        let tems = [];
+                                        for (let tem of ['重命名', '删除', '移动']) {
+                                            tems.push(<Menu.Item key={`${tem}#${d.id}`}>{tem}</Menu.Item>)
+                                        }
+                                        return tems;
+                                    })()
+                                }
+                            </Menu>
+                        )} trigger={['contextMenu']}>
+                            <div>{d.name}</div>
+                        </Dropdown>
 
 
-                        </Menu.Item>);
-            }else {
-                if(!this.state.classes.get(type+'')){
-                    this.getClasses(type, (data) => {
-                        let classes = this.state.classes;
-                        classes.set(type,data);
-                        this.setState({classes: classes});
-                    });
-                }
-                tem.push(<Menu.SubMenu key={d.id} title={d.name} onTitleClick={this.menuClick}>
+                    </Menu.Item>);
+                } else {
+                    if (!this.state.classes.get(type + '')) {
+                        this.getClasses(type, (data) => {
+                            let classes = this.state.classes;
+                            classes.set(type, data);
+                            this.setState({ classes: classes });
+                        });
+                    }
+                    tem.push(<Menu.SubMenu key={d.id} title={d.name} onTitleClick={this.menuClick}>
                         {this.classes(d.id)}
-                </Menu.SubMenu>);
+                    </Menu.SubMenu>);
+                }
             }
         }
-    }
-    return tem;
-};
-     articles =() => {
-    let cl = this.state.articles;
-    let tem = [];
-    if (cl === undefined) {
+        return tem;
+    };
+    articles = () => {
+        let cl = this.state.articles;
+        let tem = [];
+        if (cl === undefined) {
 
-    }else{
-        for(let [index,d] of new Map( cl.map( ( item, i ) => [ i, item ] ) )){
+        } else {
+            for (let [index, d] of new Map(cl.map((item, i) => [i, item]))) {
 
-            tem.push(
-                <BlogMenu.Item key={`article${index}`} data={`{"index":${index},"id":${d.id}}`}>
+                tem.push(
+                    <BlogMenu.Item key={`article${index}`} data={`{"index":${index},"id":${d.id}}`}>
                         <div className="relative">
                             <div className="menu-article-title color-4">{d.title || '无标题'}</div>
-                            <div className="menu-briefing font-1 color-5">{d.briefing===''||d.briefing===undefined||(d.briefing.length===1&&d.briefing.charCodeAt(0).toString(16)==='a') ? '无内容' : d.briefing}</div>
+                            <div className="menu-briefing font-1 color-5">{d.briefing === '' || d.briefing === undefined || (d.briefing.length === 1 && d.briefing.charCodeAt(0).toString(16) === 'a') ? '无内容' : d.briefing}</div>
                             <div className="menu-date font-1 color-3">{d.date}</div>
                             <Dropdown trigger={['click']} overlay={(
                                 <Menu onClick={this.articleClick.bind(this)}>
@@ -400,20 +403,20 @@ class EditorCustomizedToolbarOption extends React.Component {
 
 
                         </div>
-                </BlogMenu.Item>
+                    </BlogMenu.Item>
 
-            );
-            index++;
+                );
+                index++;
+            }
         }
-    }
-    return tem;
-};
-    render(){
+        return tem;
+    };
+    render() {
 
 
         return (<Row className="editor">
 
-            <Col xs={{span: 3}} sm={{span: 3}} md={{span: 3}} lg={{span: 3}} className="editor-sidebar">
+            <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className="editor-sidebar">
 
 
 
@@ -427,13 +430,13 @@ class EditorCustomizedToolbarOption extends React.Component {
                 </Dropdown>
 
 
-                <Menu        inlineCollapsed={false}
+                <Menu inlineCollapsed={false}
                     // theme={"dark"}
-                             onClick={this.menuItemClick}
-                             className="sel-left"
-                             defaultSelectedKeys={['0']}
+                    onClick={this.menuItemClick}
+                    className="sel-left"
+                    defaultSelectedKeys={['0']}
                     // defaultOpenKeys={['sub4']}
-                             mode="inline">
+                    mode="inline">
 
                     <Menu.Item key={0}>最近文档</Menu.Item>
                     {this.classes(0)}
@@ -442,26 +445,26 @@ class EditorCustomizedToolbarOption extends React.Component {
 
 
             </Col>
-            <Col xs={{span: 4}} sm={{span: 4}} md={{span: 4}} lg={{span: 4}} className="editor-middle">
+            <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 4 }} lg={{ span: 4 }} className="editor-middle">
 
-                <BlogMenu  onClick={this.articlesItemClick} defaultSelectedKeys={["article0"]}>
+                <BlogMenu onClick={this.articlesItemClick} defaultSelectedKeys={["article0"]}>
 
                     {this.articles()}
                 </BlogMenu>
 
 
             </Col>
-            <Col xs={{span: 17}} sm={{span: 17}} md={{span: 17}} lg={{span: 17}} className="editor-viewport">
-                <input className="editor-title"  ref="editor_title"
-                       onChange={(event)=>{this.article.title = event.target.value;this.setState({selArticle:this.state.selArticle})}}
-                       onBlur={this.uploadArticle} value={this.article?this.article.title:''}/>
+            <Col xs={{ span: 17 }} sm={{ span: 17 }} md={{ span: 17 }} lg={{ span: 17 }} className="editor-viewport">
+                <input className="editor-title" ref="editor_title"
+                    onChange={(event) => { this.article.title = event.target.value; this.setState({ selArticle: this.state.selArticle }) }}
+                    onBlur={this.uploadArticle} value={this.article ? this.article.title : ''} />
 
                 <Editor
 
                     onEditorStateChange={this.onEditorStateChange}
-                    onBlur={this.editorBlur.bind(this,this.state.editorState)}
+                    onBlur={this.editorBlur.bind(this, this.state.editorState)}
                     editorState={this.state.editorState}
-                    toolbarCustomButtons={[<Update click={this.uploadArticle}/>]}
+                    toolbarCustomButtons={[<Update click={this.uploadArticle} />]}
                     toolbar={{
                         options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'image', 'remove', 'history'],
                         inline: {
@@ -528,8 +531,8 @@ class EditorCustomizedToolbarOption extends React.Component {
                             className: 'ant-btn image',
                             uploadCallback: this.uploadImageCallBack,
                             alt: { present: true, mandatory: false },
-                            inputAccept:'image/gif,image/jpeg,image/jpg,image/png,image/svg',
-                            },
+                            inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
+                        },
                         remove: { icon: undefined, className: 'ant-btn remove' },
                         history: {
                             inDropdown: false,

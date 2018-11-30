@@ -2,31 +2,32 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Menu } from 'antd'
 import { Article, Clock, Skeleton } from './components'
-import { articlesAction, classesAction, topArticlesAction } from './actions'
+import { classesAction } from 'src/actions'
+import { articlesAction, topArticlesAction } from './actions'
 import { Article as ArticleModel } from '@/models'
 import './career.less'
 const mapStateToProps = (state: any, ownProps: any) => {
-    const { Career, Classes } = state
+    const { Classes, Articles } = state
     let topArticle
     let topArticles
-    if (Career.topArticles.length === 5) {
-        topArticle = Career.topArticles[0]
-        topArticles = Career.topArticles.concat().splice(1, 4)
+    if (Articles.topArticles.length === 5) {
+        topArticle = Articles.topArticles[0]
+        topArticles = Articles.topArticles.concat().splice(1, 4)
     } else {
         topArticle = {}
-        topArticles = Career.topArticles
+        topArticles = Articles.topArticles
     }
     return ({
         classes: Classes.classes,
-        mainArticles: Career.mainArticles,
+        mainArticles: Articles.mainArticles,
         topArticle,
         topArticles,
-        loadingArticles: Career.loadingArticles,
+        loadingArticles: Articles.loadingArticles,
     })
 }
 const mapDispatchToProps = (dispatch: any) => ({
     fetchArticles: (payload: any) => dispatch(articlesAction(payload)),
-    fetchClasses: (payload: any) => dispatch(classesAction(payload)),
+    fetchClasses: (id: any) => dispatch(classesAction({ id })),
     fetchTopArticles: (payload: any) => dispatch(topArticlesAction(payload)),
 })
 interface Props {
@@ -36,7 +37,7 @@ interface Props {
     topArticles: ArticleModel[]
     loadingArticles: boolean
     fetchArticles({ type, page, size }: { type: number, page: number, size: number, more?: boolean }): void
-    fetchClasses(pid: number): void
+    fetchClasses(id: number): void
     fetchTopArticles(pid: number): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)

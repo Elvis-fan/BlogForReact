@@ -16,7 +16,27 @@
       "node_modules/koa-custom-response/typings/response.d.ts",
       "src/typings.d.ts"
     ],
-    "lib": [ "es2015" ]
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": [
+        "config/*"
+      ],
+      "@dto/*": [
+        "dto/*"
+      ],
+      "@filter/*": [
+        "filter/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ],
+      "@util/*": [
+        "util/*"
+      ]
+    },
+    "lib": [
+      "es2015"
+    ]
   },
   "compileOnSave": true,
   "includes": [
