@@ -1,9 +1,19 @@
 import { put, call } from 'redux-saga/effects'
-import { ARTICLES_TYPE, TOP_ARTICLES_TYPE } from 'src/action-types'
+import { ARTICLES_TYPE, TOP_ARTICLES_TYPE, ARTICLE_TYPE } from 'src/action-types'
 import {
     fetchArticles as fetchArticlesApi,
-    fetchTopArticles as fetchTopArticlesApi
+    fetchTopArticles as fetchTopArticlesApi,
+    fetchArticle as fetchArticleApi
 } from 'src/api'
+export const fetchArticle = function* (action: any) {
+    try {
+        yield put({ type: ARTICLE_TYPE.FETCH_REQUEST, payload: 123 })
+        const response = yield call(fetchArticleApi, action.payload)
+        yield put({ type: ARTICLE_TYPE.FETCH_SUCCESS, payload: response })
+    } catch (e) {
+        yield put({ type: ARTICLE_TYPE.FETCH_FAILURE, payload: '123' })
+    }
+}
 export const fetchArticles = function* (action: any) {
     try {
         yield put({ type: ARTICLES_TYPE.FETCH_REQUEST, payload: 123 })

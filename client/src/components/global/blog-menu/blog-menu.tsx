@@ -5,7 +5,7 @@ import './blog-menu.less'
 interface Props {
     defaultSelectedKeys: any[]
     defaultOpenKeys: any[]
-    onClick(): void
+    onClick(event: any): void
 }
 class BlogMenu extends Component<Props, any> {
 

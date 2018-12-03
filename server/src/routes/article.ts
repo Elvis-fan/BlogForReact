@@ -7,7 +7,7 @@ export class Article {
   collection
   @(Autowired(() => db.collection('classes')) as any)
   classesCollection
-  @Route({ path: 'getArticles/:type/:page/:size', type: TYPE.GET })
+  @Route({ path: 'articles/:type/:page/:size', type: TYPE.GET })
   async getArticles({ params }) {
     const { type, page, size } = params
     const classes = await this.classesCollection
@@ -22,7 +22,7 @@ export class Article {
       .toArray()
   }
 
-  @Route({ path: 'getTopArticles/:type', type: TYPE.GET })
+  @Route({ path: 'topArticles/:type', type: TYPE.GET })
   async getTopArticles({ params }) {
     const { type } = params
     const classes = await this.classesCollection
@@ -36,10 +36,16 @@ export class Article {
       .toArray()
   }
 
-  @Route({ path: 'getArticle/:id', type: TYPE.GET })
+  @Route({ path: 'article/:id', type: TYPE.GET })
   async getArticle({ params }) {
     const { id } = params
-    return await this.collection.find({ id }, { projection: { _id: 0 } }).toArray()
+    return await this.collection.find({ id }, { projection: { _id: 0 } }).next()
+  }
+
+  @Route({ path: 'article', type: TYPE.POST })
+  async postArticle({ params }) {
+    console.log(params)
+    return {}
   }
 
   @Route({ path: 'test', type: TYPE.POST })

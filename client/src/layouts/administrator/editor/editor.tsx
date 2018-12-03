@@ -1,79 +1,73 @@
 import * as React from 'react'
-import { Menu, Icon, Row, Col, Button } from 'antd'
+import { Menu, Icon, Row, Col, Button, Dropdown } from 'antd'
+import { BlogEditor } from 'src/components'
 import { connect } from 'react-redux'
-import BEditor from 'braft-editor'
-import { classesAction, articlesAction } from 'src/actions'
+import { classesAction, articlesAction, articleAction } from 'src/actions'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
 import { BlogMenu } from '@/components'
 import 'braft-editor/dist/index.css'
 import './editor.less'
-const BraftEditor: any = BEditor
-const { Item, SubMenu } = BlogMenu
 const mapStateToProps = (state: any, ownProps: any) => {
     const { Classes, Articles } = state
     return {
+        article: Articles.Articles,
         classes: Classes.classes,
         articles: Articles.mainArticles,
     }
 }
 const mapDispatchToProps = (dispatch: any) => ({
     fetchClasses: (id: string, child: number = 0) => dispatch(classesAction({ id, child })),
-    fetchArticles: (payload: any) => dispatch(articlesAction(payload)),
+    fetchArticles: (classes: string | number) => dispatch(articlesAction({ type: classes, page: 0, size: 9999 })),
+    fetchArticle: (id: string | number) => dispatch(articleAction(id)),
 })
 interface Props {
-    classes: ClassesModel[],
-    articles: ArticleModel[],
+    article: ArticleModel
+    classes: ClassesModel[]
+    articles: ArticleModel[]
+    fetchArticle(id: string | number): void
     fetchClasses(pid: number | string, child?: number): void
-    fetchArticles({ type, page, size }: { type: number, page: number, size: number, more?: boolean }): void
+    fetchArticles(classes: string | number): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class Editor extends React.Component<Props, any>{
-    state: any = {
-        editorState: null,
-    }
+
     componentWillMount() {
         const { fetchClasses, fetchArticles } = this.props
         fetchClasses(0, 1)
-        fetchArticles({ type: 1, page: 0, size: 9999 })
+        fetchArticles(1)
     }
-    handleEditorChange = (editorState: any) => {
-        this.setState({ editorState })
+    classesClick = ({ key }: any) => {
+        console.log(key)
+        const { fetchArticles } = this.props
+        fetchArticles(key)
     }
-    submitContent = async () => {
-        // 在编辑器获得焦点时按下ctrl+s会执行此方法
-        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
-        const htmlContent = this.state.editorState.toHTML()
-        console.log(htmlContent)
-        // const result = await saveEditorContent(htmlContent)
-    }
-    // subMenuCLick = ({ key }: any) => {
-    //     const { fetchClasses }: Props = this.props
-    //     fetchClasses(key, { child: true })
-    // }
-    articlesItemClick() {
 
+
+    articlesItemClick = ({ key }: any) => {
+        const id = key.replace('article', '')
+        const { fetchArticle } = this.props
+        fetchArticle(id)
     }
     render() {
         const { classes, fetchClasses, articles }: Props = this.props
-        console.log(articles)
-        // const { subMenuCLick } = this
+        const { classesClick } = this
         const q = ({ key }: any) => {
-            console.log(key)
+            // console.log(key)
         }
-        const { editorState } = this.state
         return <Row className='editor'>
             <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-sidebar'>
 
                 <Menu
-                    onClick={q}
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['1']}
+                    onClick={classesClick}
+                    defaultSelectedKeys={['0']}
+                    // defaultOpenKeys={['0']}
                     mode='inline'
                 >
+                    <Menu.Item className='left' key={'0'}>最新</Menu.Item>
                     {
-                        classes.map(value => <Menu.SubMenu key={value.id} title={value.name}>
+                        classes && classes.map(value => <Menu.SubMenu key={value.id} title={value.name}>
                             {
-                                value.children && value.children.map(v1 => <Menu.Item key={v1.id}>{v1.name}</Menu.Item>)
+                                value.children && value.children.map(v1 => this.getClasse(v1))
                             }
                         </Menu.SubMenu>)
                     }
@@ -83,36 +77,46 @@ export default class Editor extends React.Component<Props, any>{
                 <BlogMenu onClick={this.articlesItemClick} defaultSelectedKeys={['article0']}>
 
                     {
-                        articles && articles.map(v => <BlogMenu.Item key={`article${v.id}`} data={`{'index':${v.id},'id':${v.id}}`}>
-                            <div className='relative'>
-                                <div className='menu-article-title color-4'>{v.title || '无标题'}</div>
-                                <div className='menu-briefing font-5 color-5'>{v.briefing === '' || v.briefing === undefined || (v.briefing.length === 1 && v.briefing.charCodeAt(0).toString(16) === 'a') ? '无内容' : v.briefing}</div>
-                                <div className='menu-date font-5 color-3'>{v.date}</div>
-                                {/* <Dropdown trigger={['click']} overlay={(
-                                    <Menu onClick={this.articleClick.bind(this)}>
-                                        <Menu.Item key={1}>发布</Menu.Item>
-                                        <Menu.Item key={0}>移动</Menu.Item>
-                                        <Menu.Item key={2}>删除</Menu.Item>
-                                    </Menu>
-                                )}> */}
-                                <div className='absolute article-setting' style={{}}><Icon type='setting' /></div>
-                                {/* </Dropdown> */}
-
-
-                            </div>
-                        </BlogMenu.Item>)
+                        articles && articles.map(v => this.getArticle(v))
                     }
                 </BlogMenu>
 
             </Col>
             <Col xs={{ span: 17 }} sm={{ span: 17 }} md={{ span: 17 }} lg={{ span: 17 }} className='editor-viewport'>
-                <BraftEditor
-                    value={editorState}
-                    onChange={this.handleEditorChange}
-                    onSave={this.submitContent}
-                />
+                <BlogEditor />
             </Col>
 
         </Row >
+    }
+
+    private getClasse(v1: ClassesModel): JSX.Element {
+        return <Menu.Item key={v1.id} className='left'>
+            <Dropdown trigger={['contextMenu']} overlay={(<Menu>
+                <Menu.Item key={1}>新建</Menu.Item>
+                <Menu.Item key={0}>重命名</Menu.Item>
+                <Menu.Item key={2}>删除</Menu.Item>
+            </Menu>)}>
+                <div className='menu-item'>{v1.name}</div>
+            </Dropdown>
+        </Menu.Item>
+    }
+
+    private getArticle(v: ArticleModel): JSX.Element {
+        return <BlogMenu.Item key={`article${v.id}`} data={`{'index':${v.id},'id':${v.id}}`}>
+            <Dropdown trigger={['contextMenu']} overlay={(
+                <Menu>
+                    <Menu.Item key={1}>发布</Menu.Item>
+                    <Menu.Item key={0}>移动</Menu.Item>
+                    <Menu.Item key={2}>删除</Menu.Item>
+                </Menu>
+            )}>
+                <div className='relative'>
+                    <div className='menu-article-title color-4'>{v.title || '无标题'}</div>
+                    <div className='menu-briefing font-5 color-5'>{v.briefing === '' || v.briefing === undefined || (v.briefing.length === 1 && v.briefing.charCodeAt(0).toString(16) === 'a') ? '无内容' : v.briefing}</div>
+                    <div className='menu-date font-5 color-3'>{v.date}</div>
+                    <div className='absolute article-setting' style={{}}><Icon type='setting' /></div>
+                </div>
+            </Dropdown>
+        </BlogMenu.Item>
     }
 }
