@@ -26,10 +26,6 @@ export const Administrator = (state: CareerState = careerState, action: Action) 
                 action.payload = [...state.mainArticles, ...action.payload]
             }
             return Object.assign({}, state, { loadingArticles: false, mainArticles: [...action.payload] })
-        case TOP_ARTICLES_TYPE.FETCH_SUCCESS:
-            return Object.assign({}, state, { topArticles: [...action.payload] })
-        case ARTICLES_TYPE.FETCH_REQUEST:
-            return Object.assign({}, state, { loadingArticles: true })
         default:
             return state
     }

@@ -1,6 +1,9 @@
 import { Route, TYPE, Autowired } from 'koa2_autowired_route/core/annotation'
 import { getPostData } from '@util/post-util'
+import { mongodbResult } from '@filter/mongodb.result'
+
 import { db } from '@util/mongodb'
+import { SignInterceptor } from '@filter/sign'
 @(Route({ path: 'article' }) as any)
 export class Article {
   @(Autowired(() => db.collection('articles')) as any)
@@ -10,6 +13,16 @@ export class Article {
   @Route({ path: 'articles/:type/:page/:size', type: TYPE.GET })
   async getArticles({ params }) {
     const { type, page, size } = params
+    if (type === 'new') {
+      return await this.collection
+        .find({},
+          {
+            sort: { date: -1 },
+            limit: 15,
+            projection: { _id: 0, content: 0, images: 0 },
+          })
+        .toArray()
+    }
     const classes = await this.classesCollection
       .find({ pid: type }, { projection: { id: 1, _id: 0 } }).map((v) => v.id).toArray()
     classes.push(type)
@@ -17,6 +30,19 @@ export class Article {
       .find({ class: { $in: classes } },
         {
           skip: page * size, limit: Number(size),
+          projection: { _id: 0, content: 0, images: 0 },
+        })
+      .toArray()
+  }
+
+  @Route({ path: 'articles/new', type: TYPE.GET })
+  async newArticles() {
+
+    return await this.collection
+      .find({},
+        {
+          sort: { date: -1 },
+          limit: 15,
           projection: { _id: 0, content: 0, images: 0 },
         })
       .toArray()
@@ -42,9 +68,13 @@ export class Article {
     return await this.collection.find({ id }, { projection: { _id: 0 } }).next()
   }
 
-  @Route({ path: 'article', type: TYPE.POST })
-  async postArticle({ params }) {
-    console.log(params)
+  @Route({ path: 'article', type: TYPE.POST, Interceptors: [SignInterceptor] })
+  async postArticle(ctx: any) {
+    const article: any = await getPostData(ctx)
+    if (article.id) {
+      const data = await this.collection.update({ id: article.id }, article)
+      return mongodbResult(data)
+    }
     return {}
   }
 

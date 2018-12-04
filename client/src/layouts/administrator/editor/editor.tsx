@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, Icon, Row, Col, Button, Dropdown } from 'antd'
+import { Menu, Icon, Row, Col, Dropdown } from 'antd'
 import { BlogEditor } from 'src/components'
 import { connect } from 'react-redux'
 import { classesAction, articlesAction, articleAction } from 'src/actions'
@@ -7,6 +7,7 @@ import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
 import { BlogMenu } from '@/components'
 import 'braft-editor/dist/index.css'
 import './editor.less'
+import { RouteComponentProps } from 'react-router-dom'
 const mapStateToProps = (state: any, ownProps: any) => {
     const { Classes, Articles } = state
     return {
@@ -20,7 +21,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     fetchArticles: (classes: string | number) => dispatch(articlesAction({ type: classes, page: 0, size: 9999 })),
     fetchArticle: (id: string | number) => dispatch(articleAction(id)),
 })
-interface Props {
+interface Props extends RouteComponentProps {
     article: ArticleModel
     classes: ClassesModel[]
     articles: ArticleModel[]
@@ -30,52 +31,75 @@ interface Props {
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class Editor extends React.Component<Props, any>{
-
+    state: any = {
+        classe: '',
+        article: '',
+    }
     componentWillMount() {
-        const { fetchClasses, fetchArticles } = this.props
+        const { fetchClasses, fetchArticles, fetchArticle, history } = this.props
+        const { article, classe }: any = this.props.match.params
         fetchClasses(0, 1)
-        fetchArticles(1)
+        if (!classe) {
+            history.push(`/administrator/editor/new/_`)
+        } else {
+            fetchArticles(classe)
+            if (article !== '_') {
+                fetchArticle(article)
+            }
+        }
     }
     classesClick = ({ key }: any) => {
-        console.log(key)
-        const { fetchArticles } = this.props
-        fetchArticles(key)
+        const { history } = this.props
+        history.push(`/administrator/editor/${key}/_`)
     }
+    componentWillReceiveProps(nextProps: Props) {
+        const { fetchArticles, fetchArticle, history, articles } = this.props
+        const { params }: any = this.props.match
+        const nextParams: any = nextProps.match.params
+        const nextArticles = nextProps.articles
+        if (params.classe !== nextParams.classe) {
+            fetchArticles(nextParams.classe)
+        } else if (nextParams.article === '_' && nextArticles.length > 0) {
+            history.push(`/administrator/editor/${nextParams.classe}/${nextArticles[0].id}`)
+            fetchArticle(nextArticles[0].id)
+        } else if (nextParams.article && nextParams.article !== '_') {
+            fetchArticle(nextParams.article)
+        }
 
+    }
 
     articlesItemClick = ({ key }: any) => {
         const id = key.replace('article', '')
-        const { fetchArticle } = this.props
-        fetchArticle(id)
+        const { history, match }: any = this.props
+        history.push(`/administrator/editor/${match.params.classe}/${id}`)
     }
     render() {
-        const { classes, fetchClasses, articles }: Props = this.props
         const { classesClick } = this
-        const q = ({ key }: any) => {
-            // console.log(key)
-        }
+        const { classes, articles }: Props = this.props
+        const { article, classe }: any = this.props.match.params
+        const defaultOpenKeys = classes.map(classe => classe.id)
         return <Row className='editor'>
             <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-sidebar'>
-
-                <Menu
-                    onClick={classesClick}
-                    defaultSelectedKeys={['0']}
-                    // defaultOpenKeys={['0']}
-                    mode='inline'
-                >
-                    <Menu.Item className='left' key={'0'}>最新</Menu.Item>
-                    {
-                        classes && classes.map(value => <Menu.SubMenu key={value.id} title={value.name}>
-                            {
-                                value.children && value.children.map(v1 => this.getClasse(v1))
-                            }
-                        </Menu.SubMenu>)
-                    }
-                </Menu>
+                {
+                    defaultOpenKeys.length && <Menu
+                        onClick={classesClick}
+                        defaultSelectedKeys={[classe]}
+                        defaultOpenKeys={defaultOpenKeys}
+                        mode='inline'
+                    >
+                        <Menu.Item className='left' key={'new'}>最新</Menu.Item>
+                        {
+                            classes && classes.map(value => <Menu.SubMenu key={value.id} title={value.name}>
+                                {
+                                    value.children && value.children.map(v1 => this.getClasse(v1))
+                                }
+                            </Menu.SubMenu>)
+                        }
+                    </Menu>
+                }
             </Col>
             <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 4 }} lg={{ span: 4 }} className='editor-middle'>
-                <BlogMenu onClick={this.articlesItemClick} defaultSelectedKeys={['article0']}>
-
+                <BlogMenu onClick={this.articlesItemClick} selectedKeys={[`article${article}`]} defaultSelectedKeys={[`article${article}`]}>
                     {
                         articles && articles.map(v => this.getArticle(v))
                     }

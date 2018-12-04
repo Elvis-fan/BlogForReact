@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Component } from 'react'
 import './blog-menu.less'
 interface Props {
+    selectedKeys?: any[]
     defaultSelectedKeys: any[]
     defaultOpenKeys: any[]
     onClick(event: any): void
@@ -11,6 +12,7 @@ class BlogMenu extends Component<Props, any> {
 
     static defaultProps = {
         onClick: () => { },
+        selectedKeys: [],
         defaultSelectedKeys: [],
         defaultOpenKeys: []
     }
@@ -173,6 +175,11 @@ class BlogMenu extends Component<Props, any> {
     state = {
         selectedKeys: this.props.defaultSelectedKeys,
         openKeys: this.props.defaultOpenKeys
+    }
+    componentWillReceiveProps(nextProps: Props) {
+        this.setState({
+            selectedKeys: nextProps.selectedKeys
+        })
     }
 
     itemOnClick = (item: any) => {

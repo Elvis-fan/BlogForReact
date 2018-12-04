@@ -3,5 +3,8 @@ import { ARTICLES_TYPE, TOP_ARTICLES_TYPE, ARTICLE_TYPE, CLASSES_TYPE } from 'sr
 import { editorClass } from './task'
 
 export const watchClass = function* () {
-  yield takeEvery(ARTICLES_TYPE.FETCH_SUCCESS, editorClass)
+  // yield takeEvery('@@router/LOCATION_CHANGE', function* (action: any) {
+  //   yield takeEvery(ARTICLES_TYPE.FETCH_SUCCESS, editorClass)
+  // })
+  yield
 }
