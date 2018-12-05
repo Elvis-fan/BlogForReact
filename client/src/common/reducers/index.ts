@@ -6,7 +6,8 @@ import { navBar } from 'src/components/global/nav-bar/reducer'
 import { Career } from 'src/layouts/career/reducer'
 import { Articles } from './articles'
 
+import { Sign } from './sign'
 const stores = combineReducers({
-    curtain, navBar, routerReducer, Career, Classes, Articles
+    curtain, navBar, routerReducer, Career, Classes, Articles, Sign
 })
 export default stores

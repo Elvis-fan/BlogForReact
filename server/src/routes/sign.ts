@@ -16,6 +16,6 @@ export class Sign {
     if (data > 0) {
       token = encode(name)
     }
-    return { in: data, token }
+    return { status: data, token }
   }
 }

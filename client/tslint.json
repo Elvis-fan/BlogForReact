@@ -30,6 +30,7 @@
     "member-access": false,
     "object-literal-sort-keys": false,
     "no-debugger": false,
+    "jsx-no-lambda": false,
     "quotemark": [
       true,
       "single",

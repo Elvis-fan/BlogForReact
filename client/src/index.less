@@ -1,53 +1,53 @@
 @charset "utf-8";
 @import "./common/style/less/const.less";
 html {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-size: 10px;
-    font-family: "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  font-family: "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 //文字大小设置
-@min-screen: 336px;
+@min-screen: 319px;
 @middle-screen: 767px;
 @max-screen: 1140px;
 @mobile-font-sizes: 0.23 0.21 0.19 0.17 0.15 0.13 0.11;
 @media (min-width: @min-screen) and (max-width: @middle-screen) {
-    html {
-        font-size: 4/15*100vw;
+  html {
+    font-size: 4/15*100vw;
+  }
+  .font-loop(@font-sizes, @i: 1) when (@i <=length(@font-sizes)) {
+    .font-@{i} {
+      font-size: 4/15*100vw* extract(@font-sizes, @i);
     }
-    .font-loop(@font-sizes, @i: 1) when (@i <=length(@font-sizes)) {
-        .font-@{i} {
-            font-size: 4/15*100vw* extract(@font-sizes, @i);
-        }
-        h@{i} {
-            font-size: 4/15*100vw* extract(@font-sizes, @i);
-        }
-        .font-loop(@font-sizes, (@i + 1));
+    h@{i} {
+      font-size: 4/15*100vw* extract(@font-sizes, @i);
     }
-    .font-loop(@mobile-font-sizes);
+    .font-loop(@font-sizes, (@i + 1));
+  }
+  .font-loop(@mobile-font-sizes);
 }
 
 // @font-sizes: 2.4rem 2.2rem 2rem 1.8rem 1.6rem 1.4rem 1.4rem 1.2rem 1rem;
 @PC-width: 360px;
 @media (min-width: 768px) {
-    html {
-        font-size: 4/15*@PC-width;
+  html {
+    font-size: 4/15*@PC-width;
+  }
+  .font-loop(@font-sizes, @i: 1) when (@i <=length(@font-sizes)) {
+    .font-@{i} {
+      font-size: 4/15*@PC-width* extract(@font-sizes, @i);
     }
-    .font-loop(@font-sizes, @i: 1) when (@i <=length(@font-sizes)) {
-        .font-@{i} {
-            font-size: 4/15*@PC-width* extract(@font-sizes, @i);
-        }
-        h@{i} {
-            font-size: 4/15*@PC-width* extract(@font-sizes, @i);
-        }
-        .font-loop(@font-sizes, (@i + 1));
+    h@{i} {
+      font-size: 4/15*@PC-width* extract(@font-sizes, @i);
     }
-    .font-loop(@mobile-font-sizes);
+    .font-loop(@font-sizes, (@i + 1));
+  }
+  .font-loop(@mobile-font-sizes);
 }
 
 // @min-font-size: 1.4rem;
@@ -76,83 +76,83 @@ body {
 //  }
 //}
 .left {
-    float: left;
+  float: left;
 }
 
 .right {
-    float: right;
+  float: right;
 }
 
 .vertical {
-    display: table-cell;
-    vertical-align: middle;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 //滚动条
 .scroll ul {
-    overflow: auto;
+  overflow: auto;
 }
 
 .scroll ul {
-    scrollbar-base-color: transparent;
-    scrollbar-3dlight-color: transparent;
-    scrollbar-highlight-color: transparent;
-    scrollbar-track-color: transparent;
+  scrollbar-base-color: transparent;
+  scrollbar-3dlight-color: transparent;
+  scrollbar-highlight-color: transparent;
+  scrollbar-track-color: transparent;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    border-radius: 4px; //maxheight: 10px;
+  width: 8px;
+  border-radius: 4px; //maxheight: 10px;
 }
 
 ::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }
 
 ::-webkit-scrollbar-track {
-    background: #fff;
-    display: none;
+  background: #fff;
+  display: none;
 }
 
 ::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }
 
 ::-webkit-scrollbar-track-piece {
-    background: #ECEBEB;
+  background: #ECEBEB;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(115, 110, 254, 0.5) !important;
-    border-radius: 4px;
+  background: rgba(115, 110, 254, 0.5) !important;
+  border-radius: 4px;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .text-right {
-    text-align: right;
+  text-align: right;
 }
 
 .text-left {
-    text-align: left;
+  text-align: left;
 }
 
 .absolute {
-    position: absolute;
+  position: absolute;
 }
 
 .relative {
-    position: relative;
+  position: relative;
 }
 
 .in-block {
-    display: inline-block;
+  display: inline-block;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 //h1,h2,h3,h4,h5,h6{
@@ -160,20 +160,20 @@ body {
 //}
 ul,
 ol {
-    list-style: none;
+  list-style: none;
 }
 
 //ant补充样式
 .sel-left.ant-menu-inline .ant-menu-item:after,
 .sel-left.ant-menu-vertical .ant-menu-item:after {
-    right: auto;
-    left: 0;
-    border-left: 3px solid @primary-color;
-    border-right: none;
-    margin-right: 1px;
+  right: auto;
+  left: 0;
+  border-left: 3px solid @primary-color;
+  border-right: none;
+  margin-right: 1px;
 }
 
 .ant-menu-inline .ant-menu-item,
 .ant-menu-vertical .ant-menu-item {
-    margin-right: 1px;
+  margin-right: 1px;
 }
