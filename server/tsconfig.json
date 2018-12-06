@@ -24,6 +24,9 @@
       "@dto/*": [
         "dto/*"
       ],
+      "@models/*": [
+        "models/*"
+      ],
       "@filter/*": [
         "filter/*"
       ],

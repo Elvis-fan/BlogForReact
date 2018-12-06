@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Menu, Icon, Row, Col, Dropdown } from 'antd'
-import { BlogEditor } from 'src/components'
+import { Menu, Icon, Row, Col, Dropdown, Spin } from 'antd'
+import BlogEditor from 'src/components/editor'
 import { connect } from 'react-redux'
 import { classesAction, articlesAction, articleAction } from 'src/actions'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
@@ -14,6 +14,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
         article: Articles.Articles,
         classes: Classes.classes,
         articles: Articles.mainArticles,
+
     }
 }
 const mapDispatchToProps = (dispatch: any) => ({
@@ -25,6 +26,7 @@ interface Props extends RouteComponentProps {
     article: ArticleModel
     classes: ClassesModel[]
     articles: ArticleModel[]
+
     fetchArticle(id: string | number): void
     fetchClasses(pid: number | string, child?: number): void
     fetchArticles(classes: string | number): void
@@ -43,7 +45,7 @@ export default class Editor extends React.Component<Props, any>{
             history.push(`/administrator/editor/new/_`)
         } else {
             fetchArticles(classe)
-            if (article !== '_') {
+            if (article && article !== '_') {
                 fetchArticle(article)
             }
         }
@@ -62,10 +64,11 @@ export default class Editor extends React.Component<Props, any>{
         } else if (nextParams.article === '_' && nextArticles.length > 0) {
             history.push(`/administrator/editor/${nextParams.classe}/${nextArticles[0].id}`)
             fetchArticle(nextArticles[0].id)
-        } else if (nextParams.article && nextParams.article !== '_') {
+        } else if (!nextParams.article) {
+            history.push(`/administrator/editor/${nextParams.classe}/_`)
+        } else if (nextParams.article && nextParams.article !== '_' && nextParams.article !== params.article) {
             fetchArticle(nextParams.article)
         }
-
     }
 
     articlesItemClick = ({ key }: any) => {
@@ -85,8 +88,7 @@ export default class Editor extends React.Component<Props, any>{
                         onClick={classesClick}
                         defaultSelectedKeys={[classe]}
                         defaultOpenKeys={defaultOpenKeys}
-                        mode='inline'
-                    >
+                        mode='inline'>
                         <Menu.Item className='left' key={'new'}>最新</Menu.Item>
                         {
                             classes && classes.map(value => <Menu.SubMenu key={value.id} title={value.name}>
@@ -104,12 +106,10 @@ export default class Editor extends React.Component<Props, any>{
                         articles && articles.map(v => this.getArticle(v))
                     }
                 </BlogMenu>
-
             </Col>
             <Col xs={{ span: 17 }} sm={{ span: 17 }} md={{ span: 17 }} lg={{ span: 17 }} className='editor-viewport'>
                 <BlogEditor />
             </Col>
-
         </Row >
     }
 
@@ -126,8 +126,15 @@ export default class Editor extends React.Component<Props, any>{
     }
 
     private getArticle(v: ArticleModel): JSX.Element {
+        const articleMenuChange = (visible: boolean) => {
+            const { history } = this.props
+            const { classe }: any = this.props.match.params
+            if (visible) {
+                history.push(`/administrator/editor/${classe}/${v.id}`)
+            }
+        }
         return <BlogMenu.Item key={`article${v.id}`} data={`{'index':${v.id},'id':${v.id}}`}>
-            <Dropdown trigger={['contextMenu']} overlay={(
+            <Dropdown trigger={['contextMenu']} onVisibleChange={articleMenuChange} overlay={(
                 <Menu>
                     <Menu.Item key={1}>发布</Menu.Item>
                     <Menu.Item key={0}>移动</Menu.Item>
@@ -138,7 +145,6 @@ export default class Editor extends React.Component<Props, any>{
                     <div className='menu-article-title color-4'>{v.title || '无标题'}</div>
                     <div className='menu-briefing font-5 color-5'>{v.briefing === '' || v.briefing === undefined || (v.briefing.length === 1 && v.briefing.charCodeAt(0).toString(16) === 'a') ? '无内容' : v.briefing}</div>
                     <div className='menu-date font-5 color-3'>{v.date}</div>
-                    <div className='absolute article-setting' style={{}}><Icon type='setting' /></div>
                 </div>
             </Dropdown>
         </BlogMenu.Item>
