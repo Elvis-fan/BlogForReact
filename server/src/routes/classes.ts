@@ -1,5 +1,8 @@
 import { Route, TYPE, Autowired } from 'koa2_autowired_route/core/annotation'
-import { db } from '@util/mongodb'
+import { db, getNextId } from '@util/mongodb'
+import { Classes as ClassesModel } from '@models/classes'
+import { getPostData } from '@util/post-util'
+import { SignInterceptor } from '@filter/sign'
 @(Route({ path: 'classes' }) as any)
 export class Classes {
   @(Autowired(() => db.collection('classes')) as any)
@@ -14,5 +17,22 @@ export class Classes {
       }
     }
     return parents
+  }
+  @Route({ path: 'class', type: TYPE.POST, Interceptors: [SignInterceptor] })
+  async update(ctx: any) {
+    const classes: ClassesModel = await getPostData<ClassesModel>(ctx)
+    if (!classes.id) {
+      classes.id = await getNextId('classId')
+    }
+    const { result } = await this.collection.updateOne({ id: classes.id }, {
+      $set: { ...classes },
+    }, {
+        upsert: true,
+      })
+    if (result.ok === 1) {
+      const data = await this.collection.findOne({ id: classes.id }, { projection: { _id: 0 } })
+      return { classe: data, status: 1 }
+    }
+    return { status: 0 }
   }
 }

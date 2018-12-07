@@ -2,7 +2,7 @@ import { Route, TYPE, Autowired } from 'koa2_autowired_route/core/annotation'
 import { getPostData } from '@util/post-util'
 import { mongodbResult } from '@filter/mongodb.result'
 import { Article as ArticleModel } from '@models/article'
-import { db } from '@util/mongodb'
+import { db, getNextId } from '@util/mongodb'
 import { SignInterceptor } from '@filter/sign'
 import * as moment from 'moment'
 
@@ -95,14 +95,8 @@ export class Article {
 
     Object.assign(article, { briefing, date, status })
 
-    const { db } = this
-    const getNextSequenceValue = async (sequenceName) => {
-      let { value } = await db.collection('counters')
-        .findOneAndUpdate({ _id: sequenceName }, { $inc: { sequence_value: 1 } })
-      return `${value.sequence_value}`
-    }
     if (!article.id) {
-      article.id = await getNextSequenceValue('articleId')
+      article.id = await getNextId('articleId')
     }
     const { result } = await this.collection.updateOne({ id: article.id }, {
       $set: { ...article },
@@ -128,11 +122,14 @@ export class Article {
     ctx.body = { data: { link: 'http://106.14.150.87/static/image/1.jpg' } }
   }
 
-  @Route({ path: 'status', type: TYPE.POST })
+  @Route({ path: 'article/status', type: TYPE.POST, Interceptors: [SignInterceptor] })
   async changeStatus(ctx) {
     const article: ArticleModel = await getPostData<ArticleModel>(ctx)
-    return await this.collection
-      .findOneAndUpdate({ id: article.id }, { ...article })
+    const { id, status } = article
+    return mongodbResult(await this.collection
+      .updateOne({ id: article.id }, {
+        $set: { id, status },
+      }))
   }
 
   @Route({ path: 'update', type: TYPE.POST })

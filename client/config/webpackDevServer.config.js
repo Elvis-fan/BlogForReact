@@ -85,7 +85,7 @@ module.exports = function (proxy, allowedHost) {
         pathRewrite: { '^/api': '' }
       }
     },
-    before (app) {
+    before(app) {
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware())
       // This service worker file is effectively a 'no-op' that will reset any
