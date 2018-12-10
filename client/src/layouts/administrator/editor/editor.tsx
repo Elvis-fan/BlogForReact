@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Menu, Icon, Row, Col, Dropdown, message, Input } from 'antd'
 import BlogEditor from 'src/components/editor'
 import { connect } from 'react-redux'
-import { classesAction, articlesAction, articleAction, postArticleStatusAction, postClassesAction } from 'src/actions'
+import { classesAction, articlesAction, articleAction, postArticleStatusAction, postClassesAction, delClassAction } from 'src/actions'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
 import { BlogMenu } from '@/components'
 import { ArticleStatus } from '@/common/enum/article-status'
@@ -10,7 +10,8 @@ import 'braft-editor/dist/index.css'
 import './editor.less'
 import { RouteComponentProps } from 'react-router-dom'
 import { ClassesMenu } from './components/classes-menu'
-
+const SubMenu = Menu.SubMenu
+const MenuItemGroup = Menu.ItemGroup
 const mapStateToProps = (state: any, ownProps: any) => {
     const { Classes, Articles } = state
     return {
@@ -26,6 +27,8 @@ const mapDispatchToProps = (dispatch: any) => ({
     fetchArticle: (id: string | number) => dispatch(articleAction(id)),
     postArticleStatus: (article: ArticleModel) => dispatch(postArticleStatusAction(article)),
     postClasses: (classes: ClassesModel) => dispatch(postClassesAction(classes)),
+    delClass: (classes: ClassesModel) => dispatch(delClassAction(classes)),
+
 })
 interface Props extends RouteComponentProps {
     article: ArticleModel
@@ -36,6 +39,7 @@ interface Props extends RouteComponentProps {
     fetchClasses(pid: number | string, child?: number): void
     fetchArticles(classes: string | number): void
     postClasses(classes: ClassesModel): void
+    delClass(classes: ClassesModel): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class Editor extends React.Component<Props, any>{
@@ -85,7 +89,7 @@ export default class Editor extends React.Component<Props, any>{
     }
     render() {
         const { classesClick } = this
-        const { classes, articles, postClasses }: Props = this.props
+        const { classes, articles, postClasses, delClass }: Props = this.props
         const { article, classe }: any = this.props.match.params
         const defaultOpenKeys = classes.map(classe => classe.id)
         return <Row className='editor'>
@@ -97,18 +101,8 @@ export default class Editor extends React.Component<Props, any>{
                         defaultOpenKeys={defaultOpenKeys}
                         classes={classes}
                         postClasses={postClasses}
+                        delClass={delClass}
                     />
-                    // <Menu
-                    //     onClick={classesClick}
-                    //     defaultSelectedKeys={[classe]}
-                    //     defaultOpenKeys={defaultOpenKeys}
-                    //     mode='inline'>
-                    //     <Menu.Item className='left' key={'new'}>最新</Menu.Item>
-                    //     {
-                    //         classes && classes.map(value => this.getsubClasses(value))
-                    //     }
-
-                    // </Menu>
                 }
             </Col>
             <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 4 }} lg={{ span: 4 }} className='editor-middle'>
@@ -124,39 +118,8 @@ export default class Editor extends React.Component<Props, any>{
         </Row >
     }
 
-    private getsubClasses(value: ClassesModel): JSX.Element {
-        return <Menu.SubMenu key={value.id} title={value.name}>
-            {value.children && value.children.map(v1 => this.getClasse(v1))}
-            <Menu.Item disabled={true}><Input /></Menu.Item>
-        </Menu.SubMenu>
-    }
-
-    private getClasse(v1: ClassesModel): JSX.Element {
-
-        const menuClick = ({ domEvent, key }: any) => {
-            domEvent.stopPropagation()
-            switch (key) {
-                case '0':
-                    return
-                case '1':
-                    return
-                case '2':
-                    return
-            }
-        }
-        return <Menu.Item key={v1.id} className='left'>
-            <Dropdown trigger={['contextMenu']} overlay={(
-                <Menu onClick={menuClick}>
-                    <Menu.Item key={0}>新建</Menu.Item>
-                    <Menu.Item key={1}>重命名</Menu.Item>
-                    <Menu.Item key={2}>删除</Menu.Item>
-                </Menu>)}>
-                <div className='menu-item'>{v1.name}</div>
-            </Dropdown>
-        </Menu.Item>
-    }
-
     private getArticle(v: ArticleModel): JSX.Element {
+        const { classes }: Props = this.props
         const articleMenuChange = (visible: boolean) => {
             const { history } = this.props
             const { classe }: any = this.props.match.params
@@ -166,7 +129,7 @@ export default class Editor extends React.Component<Props, any>{
         }
 
         const menuClick = ({ key }: any) => {
-            console.log(typeof key)
+            console.log(key)
             const { postArticleStatus } = this.props
             switch (key) {
                 case '0':
@@ -184,7 +147,15 @@ export default class Editor extends React.Component<Props, any>{
             <Dropdown trigger={['contextMenu']} onVisibleChange={articleMenuChange} overlay={(
                 <Menu onClick={menuClick}>
                     <Menu.Item key={0}>发布</Menu.Item>
-                    <Menu.Item key={1}>移动</Menu.Item>
+                    <SubMenu key={1} title={'移动'}>
+                        {
+                            classes && classes.map(classe => <MenuItemGroup className='a-move-menu' key={classe.id} title={classe.name}>
+                                {
+                                    classe.children && classe.children.map(child => <Menu.Item key={`move-${child.id}`}>{child.name}</Menu.Item>)
+                                }
+                            </MenuItemGroup>)
+                        }
+                    </SubMenu>
                     <Menu.Item key={2}>删除</Menu.Item>
                 </Menu>
             )}>

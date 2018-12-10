@@ -35,4 +35,13 @@ export class Classes {
     }
     return { status: 0 }
   }
+  @Route({ path: 'class', type: TYPE.DELETE, Interceptors: [SignInterceptor] })
+  async delete(ctx: any) {
+    const classe: ClassesModel = await getPostData<ClassesModel>(ctx)
+    const { result } = await this.collection.deleteOne({ id: classe.id })
+    if (result.ok === 1) {
+      return { classe, status: 1 }
+    }
+    return { status: 0 }
+  }
 }

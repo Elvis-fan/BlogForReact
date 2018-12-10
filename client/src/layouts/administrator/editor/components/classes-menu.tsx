@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Menu, Icon, Row, Col, Dropdown, message, Input } from 'antd'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
-export const ClassesMenu = ({ classesClick, classe, defaultOpenKeys, classes, postClasses }: any) => {
+export const ClassesMenu = ({ classesClick, classe, defaultOpenKeys, classes, postClasses, delClass }: any) => {
   const [add, setAdd] = useState({})
   const [ivalue, setValue] = useState('')
   return <Menu
@@ -11,12 +11,12 @@ export const ClassesMenu = ({ classesClick, classe, defaultOpenKeys, classes, po
     mode='inline'>
     <Menu.Item className='left' key={'new'}>最新</Menu.Item>
     {
-      classes && classes.map((value: any) => SubClasses(value, add[value.id], setAdd, ivalue, setValue, postClasses))
+      classes && classes.map((value: any) => SubClasses(value, add[value.id], setAdd, ivalue, setValue, postClasses, delClass))
     }
 
   </Menu>
 }
-const SubClasses = (value: ClassesModel, addShow: any, setAdd: any, ivalue: any, setValue: any, postClasses: any): JSX.Element => {
+const SubClasses = (value: ClassesModel, addShow: any, setAdd: any, ivalue: any, setValue: any, postClasses: any, delClass: any): JSX.Element => {
   const save = () => {
     postClasses({
       name: ivalue,
@@ -38,7 +38,7 @@ const SubClasses = (value: ClassesModel, addShow: any, setAdd: any, ivalue: any,
   }
   return <Menu.SubMenu key={value.id} title={value.name}>
     {value.children && value.children.map(v1 => <Menu.Item key={v1.id} className='left'>
-      <ClasseItem v1={v1} setAdd={() => setAdd({ [value.id]: true })} postClasses={postClasses} />
+      <ClasseItem v1={v1} setAdd={() => setAdd({ [value.id]: true })} postClasses={postClasses} delClass={delClass} />
     </Menu.Item>)}
     {
       addShow && <Menu.Item disabled={true}><Input value={ivalue} onBlur={onBlur} onChange={change} autoFocus={addShow} onPressEnter={save} id={`addmenu${value.id}`} /></Menu.Item>
@@ -46,7 +46,7 @@ const SubClasses = (value: ClassesModel, addShow: any, setAdd: any, ivalue: any,
   </Menu.SubMenu>
 }
 
-const ClasseItem = ({ v1, setAdd, postClasses }: { v1: ClassesModel, setAdd: any, postClasses: any }): JSX.Element => {
+const ClasseItem = ({ v1, setAdd, postClasses, delClass }: { v1: ClassesModel, setAdd: any, postClasses: any, delClass: any }): JSX.Element => {
   const [isEdit, setIsEdit] = useState(false)
   const [name, setName] = useState(v1.name)
   const menuClick = ({ domEvent, key }: any) => {
@@ -59,11 +59,12 @@ const ClasseItem = ({ v1, setAdd, postClasses }: { v1: ClassesModel, setAdd: any
         setIsEdit(true)
         return
       case '2':
+        delClass(v1)
         return
     }
   }
   const save = (event: any) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && name !== '') {
       setIsEdit(false)
       postClasses({ ...v1, name })
     }
@@ -72,6 +73,10 @@ const ClasseItem = ({ v1, setAdd, postClasses }: { v1: ClassesModel, setAdd: any
     setName(target.value)
   }
   const blur = () => {
+    if (name !== '') {
+      setIsEdit(false)
+      postClasses({ ...v1, name })
+    }
 
   }
   return <Dropdown trigger={['contextMenu']} overlay={(
@@ -83,7 +88,7 @@ const ClasseItem = ({ v1, setAdd, postClasses }: { v1: ClassesModel, setAdd: any
     <div className='menu-item' >{
       isEdit
         ? <Input value={name} onBlur={blur} onChange={change} autoFocus={isEdit} onPressEnter={save} />
-        : v1.name
+        : name
     }</div>
   </Dropdown>
 }
