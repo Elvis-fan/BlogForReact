@@ -81,9 +81,9 @@ const ClasseItem = ({ v1, setAdd, postClasses, delClass }: { v1: ClassesModel, s
   }
   return <Dropdown trigger={['contextMenu']} overlay={(
     <Menu onClick={menuClick}>
-      <Menu.Item key={0}>新建</Menu.Item>
-      <Menu.Item key={1}>重命名</Menu.Item>
-      <Menu.Item key={2}>删除</Menu.Item>
+      <Menu.Item key={0}><Icon type='folder-add' />新建</Menu.Item>
+      <Menu.Item key={1}><Icon type='edit' />重命名</Menu.Item>
+      <Menu.Item key={2}><Icon type='delete' />删除</Menu.Item>
     </Menu>)}>
     <div className='menu-item' >{
       isEdit

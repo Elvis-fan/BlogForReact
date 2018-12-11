@@ -4,6 +4,7 @@ import { postArticleAction } from 'src/actions'
 import { Article as ArticleModel } from 'src/models'
 import { connect } from 'react-redux'
 import BEditor from './editor'
+import { ARTICLES_ACTION } from 'src/common/config/articles-action'
 const mapStateToProps = (state: any, ownProps: any) => {
   const { article, postingArticle, postArticle } = state.Articles
   return {
@@ -13,13 +14,13 @@ const mapStateToProps = (state: any, ownProps: any) => {
   }
 }
 const mapDispatchToProps = (dispatch: any) => ({
-  postArticle: (article: ArticleModel) => dispatch(postArticleAction(article)),
+  postArticle: (article: ArticleModel, action: string) => dispatch(postArticleAction(article, action)),
 })
 interface Props {
   article: ArticleModel
   postingArticle: boolean
   postArticleR: any
-  postArticle(article: ArticleModel): void
+  postArticle(article: ArticleModel, action: string): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class BlogEditor extends React.Component<Props & any, any>{
@@ -27,7 +28,7 @@ export default class BlogEditor extends React.Component<Props & any, any>{
   submitContent = (editorState: any) => {
     const { postArticle, article } = this.props
     const content = editorState.toHTML()
-    postArticle(Object.assign(article, { content }))
+    postArticle(Object.assign(article, { content }), ARTICLES_ACTION.SAVE)
   }
   titleChange = (title: string) => {
     const { article } = this.props
@@ -35,7 +36,7 @@ export default class BlogEditor extends React.Component<Props & any, any>{
   }
   titleSave = (title: string) => {
     const { postArticle, article } = this.props
-    postArticle(Object.assign(article, { title }))
+    postArticle(Object.assign(article, { title }), ARTICLES_ACTION.SAVE)
   }
   changeContent = (editorState: any) => {
     const { article } = this.props
@@ -47,10 +48,8 @@ export default class BlogEditor extends React.Component<Props & any, any>{
 
     const { article, postingArticle, postArticleR } = this.props
     const { submitContent, changeContent, titleChange } = this
+    postArticleR.status === 1 ? postArticleR.action && message.success(`${postArticleR.action}成功`) : ''
     return <div>
-      {
-        postArticleR.status === 1 ? message.success('保存成功') : ''
-      }
       <Spin spinning={postingArticle} delay={500}>
         <div className='title'>
           <Title value={article.title} change={titleChange} save={this.titleSave} />

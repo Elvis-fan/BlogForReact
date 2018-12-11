@@ -1,5 +1,6 @@
 import fly from 'flyio'
 import { getSignIn, getToken } from './storage'
+import { history } from 'src/common/stores'
 const getHeaders = (headers: any) => {
     if (getSignIn()) {
         headers.Token = getToken()
@@ -25,7 +26,15 @@ fly.interceptors.response.use(
         // 只将请求结果的data字段返回
         return response.data
     },
-    (err) => {
+    (err: any) => {
+        if (err.status === 401) {
+            history.push({
+                pathname: `/sign-in`, search: `to=${history.location.pathname}`
+            })
+        }
+        return {
+            status: 0
+        }
         // 发生网络错误后会走到这里
         // return Promise.resolve("ssss")
     }

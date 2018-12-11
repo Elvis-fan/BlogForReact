@@ -28,8 +28,9 @@ export const fetchArticles = function* (action: any) {
 export const postArticle = function* (action: any) {
     try {
         yield put({ type: POST_ARTICLES_TYPE.FETCH_REQUEST, payload: 123 })
-        const response = yield call(postArticleApi, action.payload)
-        yield put({ type: POST_ARTICLES_TYPE.FETCH_SUCCESS, payload: response })
+        const { article } = action.payload
+        const response = yield call(postArticleApi, article)
+        yield put({ type: POST_ARTICLES_TYPE.FETCH_SUCCESS, payload: { ...response, action: action.payload.action } })
     } catch (e) {
         yield put({ type: POST_ARTICLES_TYPE.FETCH_FAILURE, payload: '123' })
     }

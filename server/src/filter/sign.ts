@@ -6,7 +6,7 @@ export class SignInterceptor implements Interceptor {
     if (checkToken(token)) {
       return true
     } else {
-      ctx.throw(400, 'sign in error')
+      ctx.throw(401, 'sign in error')
       return false
     }
   }

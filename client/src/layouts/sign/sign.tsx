@@ -67,7 +67,6 @@ class SignInForm extends React.Component<any, any> {
 export default class Sign extends React.Component<Props, any> {
     form: any
     componentWillReceiveProps(nextProps: Props) {
-        console.log(nextProps)
         const { user, history } = nextProps
         if (user.status === 1) {
             let redirectURL = new URLSearchParams(location.search).get('to')

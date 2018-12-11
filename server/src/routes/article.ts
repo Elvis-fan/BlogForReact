@@ -33,10 +33,11 @@ export class Article {
         .find({ pid: type }, { projection: { id: 1, _id: 0 } }).map((v) => v.id).toArray()
       classes.push(type)
       list = await this.collection
-        .find({ class: { $in: classes } },
+        .find({ class: { $in: classes }, status: { $nin: [6] } },
           {
+            sort: { date: -1 },
             skip: page * size, limit: Number(size),
-            projection: { _id: 0, content: 0, images: 0 },
+            projection: { _id: 0, content: 0, images: 0, history: 0 },
           })
         .toArray()
     }
@@ -86,14 +87,14 @@ export class Article {
   @Route({ path: 'article', type: TYPE.POST, Interceptors: [SignInterceptor] })
   async postArticle(ctx: any) {
     const article: ArticleModel = await getPostData<ArticleModel>(ctx)
-    let briefing = article.content.replace(/<(?:.|\s)*?>/g, '')
-    if (briefing.length > 100) {
-      briefing = briefing.substring(0, 100)
-    }
-    const date = new Date()
-    const status = 0
+    // let briefing = article.content.replace(/<(?:.|\s)*?>/g, '')
+    // if (briefing.length > 100) {
+    //   briefing = briefing.substring(0, 100)
+    // }
+    // const date = new Date()
+    // const status = 0
 
-    Object.assign(article, { briefing, date, status })
+    // Object.assign(article, { briefing, date, status })
 
     if (!article.id) {
       article.id = await getNextId('articleId')

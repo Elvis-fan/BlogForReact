@@ -1,5 +1,6 @@
 import { ARTICLES_TYPE, TOP_ARTICLES_TYPE, ARTICLE_TYPE, POST_ARTICLES_TYPE } from 'src/action-types'
 import { Article as ArticlesModel } from 'src/models'
+import { ArticleStatus } from 'src/common/enum/article-status'
 interface Action {
   type: string,
   payload: any[],
@@ -16,6 +17,8 @@ interface State {
 const defaultState: State = {
   article: {
     id: '',
+    class: '',
+    status: undefined as any,
     title: '',
     author: '',
     cover: '',
@@ -42,14 +45,26 @@ export const Articles = (state: State = defaultState, action: Action) => {
     case POST_ARTICLES_TYPE.FETCH:
       return Object.assign({}, state, { postingArticle: true, postArticle: { status: 0 } })
     case POST_ARTICLES_TYPE.FETCH_SUCCESS || POST_ARTICLES_TYPE.FETCH_FAILURE:
-      const { mainArticles } = state
+      const mainArticles = [...state.mainArticles]
       const { article }: any = action.payload
-      mainArticles.forEach(artice => {
-        if (artice.id === article.id) {
-          Object.assign(artice, article)
+      let flag = true
+      for (let i = 0; i < mainArticles.length; i++) {
+        const artlc = mainArticles[i]
+        if (artlc.id === article.id && (artlc.class !== article.class || article.status === ArticleStatus.REMOVE)) {
+          flag = false
+          mainArticles.splice(i, 1)
+          break
         }
-      })
-      return Object.assign({}, state, { postingArticle: false, mainArticles: [...mainArticles], postArticle: { ...action.payload } })
+        if (artlc.id === article.id) {
+          flag = false
+          Object.assign(mainArticles[i], article)
+        }
+
+      }
+      if (flag) {
+        mainArticles.unshift(article)
+      }
+      return Object.assign({}, state, { postingArticle: false, mainArticles, postArticle: { ...action.payload } })
     case ARTICLE_TYPE.FETCH_SUCCESS:
       return Object.assign({}, state, { article: action.payload, postArticle: { status: 0 } })
     case TOP_ARTICLES_TYPE.FETCH_SUCCESS:
