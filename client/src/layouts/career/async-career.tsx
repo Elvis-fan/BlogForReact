@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { asyncComponent } from 'react-async-component'
 import { Loading } from 'src/components/global'
-
 export default asyncComponent({
-  resolve: () => import('./article'),
-  name: 'Article',
+  resolve: () => import('./career'),
+  name: 'Career',
   LoadingComponent: () => <Loading />,
 })

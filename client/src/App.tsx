@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
 import { NavBar, Curtain } from './components/global'
-import { routes, privateRoutes } from 'src/common/route'
+import { routes, privateRoutes } from 'src/routes'
 import { history, stores } from 'src/common/stores'
 import { getSignIn } from 'src/common/utils'
 

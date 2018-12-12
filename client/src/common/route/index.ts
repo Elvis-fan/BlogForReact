@@ -1,4 +1,4 @@
-import { Home, About, Career, Administrator, SignIn } from 'src/layouts'
+import { Home, About, Career, Administrator, SignIn, Article } from 'src/layouts'
 const routes = [
     {
         url: '/',
@@ -12,13 +12,18 @@ const routes = [
         component: About
     }, {
         url: '/career',
-        exact: true,
+        exact: false,
         title: '博客',
         component: Career
     }, {
+        url: '/article/:id',
+        exact: true,
+        title: '文章',
+        component: Article
+    }, {
         url: '/sign-in',
         exact: false,
-        title: '管理',
+        title: '登陆',
         component: SignIn
     }
 ]
