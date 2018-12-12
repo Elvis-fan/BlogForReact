@@ -1,5 +1,5 @@
 import { Home, About, Administrator, SignIn, Article } from 'src/layouts'
-import Career from './Career'
+import Career from './career'
 const routes = [
     {
         url: '/',

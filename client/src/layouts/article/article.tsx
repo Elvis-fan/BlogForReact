@@ -1,9 +1,10 @@
 import * as React from 'react'
-
-export default class Article extends React.Component<any, any>{
+import { RouteComponentProps } from 'react-router-dom'
+interface Props extends RouteComponentProps {
+  title:string
+}
+export default class Article extends React.Component<Props, any> {
   render() {
-    return <div>
-      Article
-        </div>
+    return <div>Article</div>
   }
 }
