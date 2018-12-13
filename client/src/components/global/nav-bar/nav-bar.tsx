@@ -1,12 +1,11 @@
 
 import * as React from 'react'
-import { Row, Col, Menu, Button, Dropdown, Icon } from 'antd'
-import { Link } from 'react-router-dom'
+import { Row, Col, Menu, Icon } from 'antd'
+import { Link,withRouter } from 'react-router-dom'
 import { SearchInput } from 'src/components'
 import { connect } from 'react-redux'
 import logo from 'src/static/img/logo.png'
-import { curtain } from './../../global/curtain/reducer'
-import { bindActionCreators } from 'redux'
+
 import { ON_CURTAIN, OFF_CURTAIN } from 'src/components/global/curtain/action-types'
 import { curtainAction } from 'src/components/global/curtain/action'
 import { CLOSE_NAV_BAR, OPEN_NAV_BAR } from './action-types'
@@ -37,6 +36,7 @@ const NavBarMenus = ({ menus, mode, style, selected, onClick, itemClass }:
         onClick?: any,
         itemClass?: string
     }) => {
+
     return <Menu onClick={onClick || (() => { })} mode={mode || 'horizontal'}
         selectedKeys={[selected]} className='right menu'
         style={style}>
@@ -46,6 +46,7 @@ const NavBarMenus = ({ menus, mode, style, selected, onClick, itemClass }:
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
+  
     return ({
         state: state.navBar.state,
         path: state.routerReducer.payload.pathname
@@ -65,8 +66,8 @@ interface NavBarProps {
     path: string
 }
 
-@(connect(mapStateToProps, mapDispatchToProps) as any)
-export default class NavBar extends React.Component<any, any> {
+
+ class NavBar extends React.Component<any, any> {
     constructor(props: any) {
         super(props)
     }
@@ -80,6 +81,12 @@ export default class NavBar extends React.Component<any, any> {
     }
     public render() {
         const { state, path } = this.props
+        let selected=path
+        for(let menu of CMenus){
+            if(menu.link.indexOf(path.split('/')[1])!==-1){
+                selected=menu.link
+            }
+        }
         const close = () => {
             setTimeout(() => {
                 this.props.toggleCurtain(OFF_CURTAIN, CLOSE_NAV_BAR)
@@ -96,16 +103,17 @@ export default class NavBar extends React.Component<any, any> {
                     {/* <SearchInput placeholder='搜索你感兴趣的内容...' className='scroll' style={{ width: 200 }} /> */}
                 </Col>
                 <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 13 }}>
-                    <NavBarMenus menus={CMenus} selected={path} />
+                    <NavBarMenus menus={CMenus} selected={selected} />
                 </Col>
                 <Col className='nav-btn' xs={{ span: 2 }} sm={{ span: 2 }} md={{ span: 0 }}>
                     <Icon type={state ? 'menu-unfold' : 'menu-fold'} className={state ? 'active font-3' : ' font-3'} onClick={this.toggleCollapsed} style={{ verticalAlign: 'middle' }} />
                 </Col>
             </Row>
             <div className={`mobile-nav ${state ? 'show' : ''}`}>
-                <NavBarMenus onClick={close} menus={CMenus} selected={path} mode={'inline'} itemClass='left' />
+                <NavBarMenus onClick={close} menus={CMenus} selected={selected} mode={'inline'} itemClass='left' />
             </div>
 
         </header>
     }
 }
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar))

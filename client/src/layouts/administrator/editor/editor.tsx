@@ -2,12 +2,12 @@ import * as React from 'react'
 import { Menu, Row, Col, Dropdown, Icon, Button } from 'antd'
 import BlogEditor from 'src/components/editor'
 import { connect } from 'react-redux'
+import {Dispatch} from 'redux'
 import { classesAction, articlesAction, articleAction, postArticleAction, postClassesAction, delClassAction } from 'src/actions'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
 import { BlogMenu } from '@/components'
 import { ArticleStatus } from '@/common/enum/article-status'
 import { IconFont } from '@/components'
-import 'braft-editor/dist/index.css'
 import './editor.less'
 import { RouteComponentProps } from 'react-router-dom'
 import { ClassesMenu } from './components/classes-menu'
@@ -17,12 +17,12 @@ const MenuItemGroup = Menu.ItemGroup
 const mapStateToProps = (state: any, ownProps: any) => {
     const { Classes, Articles } = state
     return {
-        article: Articles.Articles,
+    
         classes: Classes.classes,
         articles: Articles.mainArticles,
     }
 }
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     fetchClasses: (id: string, child: number = 0) => dispatch(classesAction({ id, child })),
     fetchArticles: (classes: string | number) => dispatch(articlesAction({ type: classes, page: 0, size: 9999 })),
     fetchArticle: (id: string | number) => dispatch(articleAction(id)),
@@ -119,7 +119,7 @@ export default class Editor extends React.Component<Props, any>{
         const { article, classe }: any = this.props.match.params
         const defaultOpenKeys = classes.map(classe => classe.id)
         return <Row className='editor'>
-            <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-sidebar'>
+            <Col xs={{ span: 2 }} sm={{ span: 2 }} md={{ span: 2 }} lg={{ span: 2 }} className='editor-sidebar'>
                 {
                     defaultOpenKeys.length && <ClassesMenu
                         classesClick={classesClick}
@@ -131,7 +131,7 @@ export default class Editor extends React.Component<Props, any>{
                     />
                 }
             </Col>
-            <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 4 }} lg={{ span: 4 }} className='editor-middle'>
+            <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-middle'>
                 <div className='a-e-a-nav pointer'>
                     <span className='font-4 link' onClick={addArticle}><Icon type='file-add' />新增</span>
                 </div>
@@ -142,7 +142,7 @@ export default class Editor extends React.Component<Props, any>{
                     }
                 </BlogMenu>
             </Col>
-            <Col xs={{ span: 17 }} sm={{ span: 17 }} md={{ span: 17 }} lg={{ span: 17 }} className='editor-viewport'>
+            <Col xs={{ span: 19 }} sm={{ span: 19 }} md={{ span: 19 }} lg={{ span: 19 }} className='editor-viewport'>
                 <BlogEditor />
             </Col>
         </Row >

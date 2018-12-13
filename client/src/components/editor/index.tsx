@@ -4,6 +4,7 @@ import { postArticleAction } from 'src/actions'
 import { Article as ArticleModel } from 'src/models'
 import { connect } from 'react-redux'
 import BEditor from './editor'
+import  {MarkEditor} from './mark-editor'
 import { ARTICLES_ACTION } from 'src/common/config/articles-action'
 const mapStateToProps = (state: any, ownProps: any) => {
   const { article, postingArticle, postArticle } = state.Articles
@@ -25,10 +26,19 @@ interface Props {
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class BlogEditor extends React.Component<Props & any, any>{
 
-  submitContent = (editorState: any) => {
+  submitContent = (content: any) => {
     const { postArticle, article } = this.props
-    const content = editorState.toHTML()
-    postArticle(Object.assign(article, { content }), ARTICLES_ACTION.SAVE)
+    // let content = editorState.toHTML()
+   
+      // for (let i = 1; i < 7; i++) {
+      //     let tex = content.split(new RegExp(`<h${i}`, 'ig'))
+      //     content = tex[0]
+      //     for (let j = 1; j < tex.length; j++) {
+      //       content += `<h${i} id="h${i}-${j}" ${tex[j]}`
+      //     }
+      // }
+      // console.log(Object.assign({},article, { content }))
+    postArticle(Object.assign({},article, { content }), ARTICLES_ACTION.SAVE)
   }
   titleChange = (title: string) => {
     const { article } = this.props
@@ -56,7 +66,8 @@ export default class BlogEditor extends React.Component<Props & any, any>{
           <Button>发布</Button>
           <Button type='primary' className='save'>保存</Button>
         </div>
-        <BEditor content={article.content} change={changeContent} submit={submitContent} />
+        <MarkEditor content={article.content} change={changeContent} submit={submitContent}/>
+        {/* <BEditor content={article.content} change={changeContent} submit={submitContent} /> */}
       </Spin>
 
     </div >
