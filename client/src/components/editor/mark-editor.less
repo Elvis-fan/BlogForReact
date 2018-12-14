@@ -1,8 +1,21 @@
 .mark-editor,.mark-view{
     overflow: auto;
     height: calc(100vh - 97px);
-    padding: 15px;
+ 
     &>div{
         min-height: 100%;
+        padding: 15px;
+        outline: none;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    p{
+        code{
+            background: #f3f4f4;
+            border: 1px solid #e7eaed;
+            background-color: #f8f8f8;
+            border-radius: 3px;
+            padding: 2px 4px 0px 4px;
+        }
     }
 }
