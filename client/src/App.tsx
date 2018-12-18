@@ -8,14 +8,13 @@ import { NavBar, Curtain } from './components/global'
 import { routes, privateRoutes } from 'src/routes'
 import { history, stores } from 'src/common/stores'
 import { getSignIn } from 'src/common/utils'
-
+import './App.less'
 class App extends React.Component {
   public render() {
-
     return (
       <Provider store={stores}>
         <ConnectedRouter history={history}>
-          <div className='App'>
+          <div className='blog'>
             <NavBar />
             <Curtain />
             <Switch>

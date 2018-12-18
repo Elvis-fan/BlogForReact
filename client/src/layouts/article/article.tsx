@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { articleAction } from 'src/actions'
 import { Anchor, Row, Col, Dropdown, Icon, Button } from 'antd'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
+import { MarkView } from '@/components/mark-view'
 const { Link } = Anchor
 const mapStateToProps = (state: any) => {
   const { article } = state.Articles
@@ -20,7 +21,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 interface Props extends RouteComponentProps {
   title: string;
-  article:ArticleModel
+  article: ArticleModel;
   fetchArticle(id: string | number): void;
 }
 
@@ -35,21 +36,12 @@ export default class Article extends React.Component<Props, any> {
     fetchArticle(id)
   }
   render() {
-    const {article}=this.props
-    console.log(article)
-    let list = article.content.match(/<h[1-6]{1}\sid=[^>]*>(.*?)<\/h[1-6]{1}>/ig)||[]
-    let arr= []
-    console.log(list)
-    for(let li of list){
-        let indentation = li.slice(li.indexOf('id="')+4,li.indexOf('" '))
-        let lis = li.match(/<\s*\/?\s*[a-zA-z_]([^>]*?["][^"]*["])*[^>"]*>/ig)
-        console.log(lis)
-        arr.push([indentation, 'lis'])
-    }
+    const { article } = this.props
+
     return (
-      <div>
+      <div className='font-6'>
         <section className='main-post-wrap'>
-          <div className='career-content'>
+          <div className='content'>
             <Row>
               <Col xs={{ span: 24 }} sm={{ span: 14 }} md={{ span: 16 }}>
                 <article className='main-post'>
@@ -68,29 +60,12 @@ export default class Article extends React.Component<Props, any> {
                     <div>
                       <span>MR-Liu | {article.date}</span>
                     </div>
+                    <MarkView text={article.content} anchorable={true} />
                   </div>
-                  <div
-                    className='main-post__cont'
-                    dangerouslySetInnerHTML={{
-                      __html: article.content
-                        .replace(/<\/script/g, '<\\/script')
-                        .replace(/<!--/g, '<\\!--')
-                    }}
-                  />
                 </article>
               </Col>
-              <Col
-                xs={{ span: 24 }}
-                sm={{ span: 8, offset: 2 }}
-                md={{ span: 6, offset: 2 }}
-              >
-                <aside>
-                  <Anchor offsetTop={80} className='aside font-2'>
-                    {arr.map((n, i) => (
-                      <Link key={n[0]} href={`#${n[0]}`} title={n[1]} />
-                    ))}
-                  </Anchor>
-                </aside>
+              <Col xs={{ span: 24 }} sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 2 }} >
+                <MarkView.Anchor />
               </Col>
             </Row>
           </div>

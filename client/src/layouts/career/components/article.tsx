@@ -12,11 +12,11 @@ export const Article = ({ item }: { item: ArticleModel }) => {
           </h2>
         </div>
         <div>
-          <span className='font-5'>MR-Liu | {item.date}</span>
+          <span className='font-7'>MR-Liu | {item.date}</span>
         </div>
       </div>
       <div className='article-bri'>
-        <p className='font-5'>{item.briefing}</p>
+        <p className='font-7'>{item.briefing}</p>
         <Button type='primary' ghost={true}>
           <a href={`/career/details/${item.id}`}>阅读全文</a>
         </Button>

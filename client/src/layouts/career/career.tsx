@@ -107,11 +107,11 @@ export default class Career extends React.Component<Props, any> {
                             }
                             <Skeleton loading={loadingArticles} />
                             {
-                                !loadingArticles && <div className='font-3 read-more pointer' onClick={readMore}>阅读更多</div>
+                                !loadingArticles && <div className='font-5 read-more pointer' onClick={readMore}>阅读更多</div>
                             }
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 2 }} className='career-menu'>
-                            <summary className='title font-3'>
+                            <summary className='title font-5'>
                                 生涯<Clock />
                             </summary>
                             <menu>

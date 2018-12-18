@@ -133,7 +133,7 @@ export default class Editor extends React.Component<Props, any>{
             </Col>
             <Col xs={{ span: 3 }} sm={{ span: 3 }} md={{ span: 3 }} lg={{ span: 3 }} className='editor-middle'>
                 <div className='a-e-a-nav pointer'>
-                    <span className='font-4 link' onClick={addArticle}><Icon type='file-add' />新增</span>
+                    <span className='font-6 link' onClick={addArticle}><Icon type='file-add' />新增</span>
                 </div>
 
                 <BlogMenu onClick={this.articlesItemClick} selectedKeys={[`article${article}`]} defaultSelectedKeys={[`article${article}`]}>
@@ -202,9 +202,9 @@ export default class Editor extends React.Component<Props, any>{
                         <Icon type={v.status === ArticleStatus.PUBLISH ? 'file-done' : 'file-text'} className='font-1' />
                     </div>
                     <div className='a-e-a-m-content'>
-                        <div className='menu-article-title font-3 color-4'>{v.title || '无标题'}</div>
-                        <div className='font-5 a-e-a-m-content color-5'>{v.briefing === '' || v.briefing === undefined || (v.briefing.length === 1 && v.briefing.charCodeAt(0).toString(16) === 'a') ? '无内容' : v.briefing}</div>
-                        <div className='menu-date font-5 color-3'>{v.date}</div>
+                        <div className='menu-article-title font-5 color-4'>{v.title || '无标题'}</div>
+                        <div className='font-7 a-e-a-m-content color-5'>{v.briefing === '' || v.briefing === undefined || (v.briefing.length === 1 && v.briefing.charCodeAt(0).toString(16) === 'a') ? '无内容' : v.briefing}</div>
+                        <div className='menu-date font-7 color-3'>{v.date}</div>
                     </div>
                 </div>
             </Dropdown>

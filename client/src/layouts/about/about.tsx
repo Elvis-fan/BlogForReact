@@ -33,7 +33,7 @@ class About extends React.Component {
         </div>
         <div id='content' className='about-page content-wrapper'>
             <div className='in-block text-wrapper font-2 right'>
-                <div className='font-5'>刘军辉</div>
+                <div className='font-7'>刘军辉</div>
                 <div>九五后，河南人</div>
                 <div>web工程师</div>
                 <div>二零一六年开始职业生涯</div>
@@ -49,7 +49,7 @@ class About extends React.Component {
         </div>
         <div className='about-page content-wrapper'>
             <div className='in-block text-wrapper font-2 left'>
-                <div className='font-5'>觉醒</div>
+                <div className='font-7'>觉醒</div>
                 <div>毕业听人一席话</div>
                 <div>奋身而入码农坑</div>
                 <div>励志用代码来帮助他人</div>

@@ -232,7 +232,7 @@ export class MarkEditor extends React.Component<any, any> {
     const { change, state, onScroll, save } = this
     const { text } = state
     return (
-      <div className='font-4'>
+      <div className='font-6'>
         <Row>
           <Col>
             {/* <Button onClick={this.test}>插入标题</Button> */}

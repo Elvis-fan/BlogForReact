@@ -1,49 +1,54 @@
 @charset "utf-8";
-@import "~src/common/style/less/const.less";
+@import '~src/common/style/less/const.less';
 .header {
-    transition: opacity .5s; // position: fixed;
-    // height: 64px;
-    // margin-bottom: @l_spacing;
-    padding: 0 48px;
-    width: 100%;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1), 0 1px rgba(0, 0, 0, 0.1);
-    background: #fafafa; // background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+
+  padding: 0 48px;
+  width: 100%;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1), 0 1px rgba(0, 0, 0, 0.1);
+  background: #fafafa; // background: rgba(255, 255, 255, 0.2);
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  &.hide{
+    top: -48px;
+    opacity: 0;
+  }
+  .ant-row {
+    & > div {
+      line-height: 46px;
+    }
+  }
+  .logo {
+    height: 38px;
+  }
+  .menu {
+    &.ant-menu {
+      border: none;
+      background: transparent;
+      li {
+        float: right;
+      }
+    }
+  }
+  .mobile-nav {
+    position: fixed;
     z-index: 20;
-    .ant-row {
-        &>div {
-            line-height: 46px;
-        }
+    background: #fafafa;
+    height: 100%;
+    right: 0;
+    overflow: hidden;
+    width: 0;
+    transition: width 0.3s;
+    &.show {
+      width: 85%;
     }
-    .logo {
-        height: 38px;
+  }
+  .nav-btn {
+    position: absolute;
+    right: 0;
+    .active {
+      color: @primary-color;
     }
-    .menu {
-        &.ant-menu {
-            border: none;
-            background: transparent;
-            li {
-                float: right;
-            }
-        }
-    }
-    .mobile-nav {
-        position: fixed;
-        z-index: 20;
-        background: #fafafa;
-        height: 100%;
-        right: 0;
-        overflow: hidden;
-        width: 0;
-        transition: width .3s;
-        &.show {
-            width: 85%;
-        }
-    }
-    .nav-btn {
-        position: absolute;
-        right: 0;
-        .active {
-            color: @primary-color;
-        }
-    }
+  }
 }

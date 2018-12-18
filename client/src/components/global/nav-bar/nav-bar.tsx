@@ -68,9 +68,15 @@ interface NavBarProps {
 
 
  class NavBar extends React.Component<any, any> {
+    scrollTop:number
+    state={
+        hide:false
+    }
     constructor(props: any) {
         super(props)
+        // document.addEventListener('scroll',this.onScroll)
     }
+   
     toggleCollapsed = () => {
         const { state } = this.props
         if (state) {
@@ -79,7 +85,21 @@ interface NavBarProps {
             this.props.toggleCurtain(ON_CURTAIN, OPEN_NAV_BAR, CLOSE_NAV_BAR)
         }
     }
+    onScroll=(e:any)=>{
+        let scrollTop=(document.documentElement as any).scrollTop || document.body.scrollTop
+        if(this.scrollTop>scrollTop){
+            if(this.state.hide){
+                this.setState({hide:false})
+            }
+        }else{
+            if(!this.state.hide){
+                this.setState({hide:true})
+            }
+        }
+        this.scrollTop=scrollTop
+    }
     public render() {
+        const {hide}=this.state
         const { state, path } = this.props
         let selected=path
         for(let menu of CMenus){
@@ -92,7 +112,7 @@ interface NavBarProps {
                 this.props.toggleCurtain(OFF_CURTAIN, CLOSE_NAV_BAR)
             }, 250)
         }
-        return <header className='header text-center'>
+        return <header className={`header text-center ${hide?'hide':''}`}>
             <Row>
                 <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 5 }}>
                     <Link to='/'>
@@ -106,7 +126,7 @@ interface NavBarProps {
                     <NavBarMenus menus={CMenus} selected={selected} />
                 </Col>
                 <Col className='nav-btn' xs={{ span: 2 }} sm={{ span: 2 }} md={{ span: 0 }}>
-                    <Icon type={state ? 'menu-unfold' : 'menu-fold'} className={state ? 'active font-3' : ' font-3'} onClick={this.toggleCollapsed} style={{ verticalAlign: 'middle' }} />
+                    <Icon type={state ? 'menu-unfold' : 'menu-fold'} className={state ? 'active font-5' : ' font-5'} onClick={this.toggleCollapsed} style={{ verticalAlign: 'middle' }} />
                 </Col>
             </Row>
             <div className={`mobile-nav ${state ? 'show' : ''}`}>
