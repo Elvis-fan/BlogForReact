@@ -72,9 +72,9 @@ interface NavBarProps {
     state={
         hide:false
     }
-    constructor(props: any) {
-        super(props)
-        // document.addEventListener('scroll',this.onScroll)
+
+    componentDidMount(){
+        (document.querySelector('.blog')as HTMLElement).addEventListener('scroll',this.onScroll)
     }
    
     toggleCollapsed = () => {
@@ -86,7 +86,8 @@ interface NavBarProps {
         }
     }
     onScroll=(e:any)=>{
-        let scrollTop=(document.documentElement as any).scrollTop || document.body.scrollTop
+        let scrollTop=(document.querySelector('.blog')as HTMLElement).scrollTop
+ 
         if(this.scrollTop>scrollTop){
             if(this.state.hide){
                 this.setState({hide:false})

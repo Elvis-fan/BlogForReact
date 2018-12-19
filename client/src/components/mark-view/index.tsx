@@ -34,7 +34,7 @@ export class MarkView extends React.Component< Props & any,any>{
         arr.push([indentation, title])
       }
       return (
-        <Anchor className='mark-anchor' offsetTop={48}>
+        <Anchor className='mark-anchor'>
           {arr.map((n, i) => (
             <Link key={n[0]} href={`#${n[0]}`} title={n[1]} />
           ))}

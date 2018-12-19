@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { articleAction } from 'src/actions'
-import { Anchor, Row, Col, Dropdown, Icon, Button } from 'antd'
+import { Anchor, Row, Col, Dropdown, Button } from 'antd'
+import MobileAnchor from './components/mobile-anchor'
 import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
 import { MarkView } from '@/components/mark-view'
+import './article.less'
 const { Link } = Anchor
 const mapStateToProps = (state: any) => {
   const { article } = state.Articles
@@ -43,7 +45,7 @@ export default class Article extends React.Component<Props, any> {
         <section className='main-post-wrap'>
           <div className='content'>
             <Row>
-              <Col xs={{ span: 24 }} sm={{ span: 14 }} md={{ span: 16 }}>
+              <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 16 }}>
                 <article className='main-post'>
                   <div className='main-post__img'>
                     {/* <img
@@ -64,12 +66,20 @@ export default class Article extends React.Component<Props, any> {
                   </div>
                 </article>
               </Col>
-              <Col xs={{ span: 24 }} sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 2 }} >
+              <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 6, offset: 2 }} >
+              
                 <MarkView.Anchor />
               </Col>
+              <Col md={{ span:0 }}>
+              <MobileAnchor>
+              <MarkView.Anchor />
+              </MobileAnchor>
+              </Col>
+           
             </Row>
           </div>
         </section>
+     
       </div>
     )
   }

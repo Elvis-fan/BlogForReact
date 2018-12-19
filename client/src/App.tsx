@@ -10,13 +10,14 @@ import { history, stores } from 'src/common/stores'
 import { getSignIn } from 'src/common/utils'
 import './App.less'
 class App extends React.Component {
+
   public render() {
     return (
       <Provider store={stores}>
         <ConnectedRouter history={history}>
           <div className='blog'>
-            <NavBar />
-            <Curtain />
+            <NavBar/>
+            
             <Switch>
               {routes.map(route => <Route key={route.url} exact={route.exact} component={route.component} path={route.url} />)}
               {
@@ -30,6 +31,7 @@ class App extends React.Component {
                 }} key={route.url} exact={route.exact} path={route.url} />)
               }
             </Switch>
+            <Curtain />
           </div>
         </ConnectedRouter>
       </Provider>
