@@ -4,6 +4,8 @@ declare const ColorPicker: any
 declare module 'stackedit-js'
 declare const Stackedit: any
 declare module 'draft-js-export-markdown'
-declare const stateToMarkdown:Function
+declare const stateToMarkdown:() => void
 declare module 'draft-js-import-markdown'
-declare const stateFromMarkdown:Function
+declare const stateFromMarkdown:() => void
+declare module 'rc-drawer/*'
+declare module 'rc-drawer'

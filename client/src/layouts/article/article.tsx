@@ -71,9 +71,8 @@ export default class Article extends React.Component<Props, any> {
                 <MarkView.Anchor />
               </Col>
               <Col md={{ span:0 }}>
-              <MobileAnchor>
-              <MarkView.Anchor />
-              </MobileAnchor>
+              <MobileAnchor anchor={MarkView.Anchor} />
+
               </Col>
            
             </Row>

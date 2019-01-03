@@ -33,6 +33,7 @@
     "prismjs": "^1.15.0",
     "promise": "8.0.1",
     "raf": "3.4.0",
+    "rc-drawer": "^1.7.7",
     "react": "^16.7.0-alpha.0",
     "react-async-component": "^2.0.0",
     "react-color": "^2.14.1",

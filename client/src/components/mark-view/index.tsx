@@ -21,11 +21,11 @@ interface Props {
 }
 
 export class MarkView extends React.Component< Props & any,any>{
-  static Anchor :any=()=><div/>
+  static Anchor :any=({onClick}:any)=><div/>
   htmlh:string=''
   constructor(props: Props & any){
     super(props)
-    MarkView.Anchor=() => {
+    MarkView.Anchor=({onClick}:any) => {
       let list = this.html.match(/<h[1-6]{1}\sid=[^>]*>([^<]*)/gi) || []
       let arr = []
       for (let li of list) {
@@ -34,7 +34,7 @@ export class MarkView extends React.Component< Props & any,any>{
         arr.push([indentation, title])
       }
       return (
-        <Anchor className='mark-anchor'>
+        <Anchor className='mark-anchor' onClick={onClick}>
           {arr.map((n, i) => (
             <Link key={n[0]} href={`#${n[0]}`} title={n[1]} />
           ))}

@@ -12,6 +12,7 @@ import './App.less'
 class App extends React.Component {
 
   public render() {
+    console.log(this.context)
     return (
       <Provider store={stores}>
         <ConnectedRouter history={history}>

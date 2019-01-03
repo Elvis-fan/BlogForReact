@@ -18,11 +18,11 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 const Curtain=({close,action,isVisible}:any)=>{
     const clean=()=>close(OFF_CURTAIN, action)
-    if(isVisible){
-        document.body.style.overflow='hidden'
-    }else{
-        document.body.style.overflow=''
-    }
+    // if(isVisible){
+    //     document.body.style.overflow='hidden'
+    // }else{
+    //     document.body.style.overflow=''
+    // }
  
     return <div onClick={clean} className={`curtain ${isVisible ? '' : 'vis-h bg-tr'}`} />
 }
