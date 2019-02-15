@@ -254,12 +254,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      vendor: '/vendor.dll.js' // 与dll配置文件中output.fileName对齐
+      // vendor: '/vendor.dll.js' // 与dll配置文件中output.fileName对齐
     }),
 
-    new webpack.DllReferencePlugin({
-      manifest: require(path.join(__dirname, 'dist', 'vendor.manifest.json'))
-    }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: require(path.join(__dirname, 'dist', 'vendor.manifest.json'))
+    // }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

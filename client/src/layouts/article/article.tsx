@@ -3,16 +3,16 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { articleAction } from 'src/actions'
-import { Anchor, Row, Col, Dropdown, Button } from 'antd'
+import {  Row, Col, Button } from 'antd'
 import MobileAnchor from './components/mobile-anchor'
-import { Classes as ClassesModel, Article as ArticleModel } from 'src/models'
+import {  Article as ArticleModel } from 'src/models'
 import { MarkView } from '@/components/mark-view'
 import './article.less'
-const { Link } = Anchor
 const mapStateToProps = (state: any) => {
   const { article } = state.Articles
   return {
-    article
+    article,
+    isMobile: state.isMobile.isMobile
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => {
@@ -62,23 +62,18 @@ export default class Article extends React.Component<Props, any> {
                     <div>
                       <span>MR-Liu | {article.date}</span>
                     </div>
-                    <MarkView text={article.content} anchorable={true} />
+                    <MarkView text={article.content} anchorable={1} />
                   </div>
                 </article>
               </Col>
-              <Col xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 6, offset: 2 }} >
+              <Col className='qweqweqwq' xs={{ span: 0 }} sm={{ span: 0 }} md={{ span: 6, offset: 2 }} >
               
                 <MarkView.Anchor />
               </Col>
-              <Col md={{ span:0 }}>
-              <MobileAnchor anchor={MarkView.Anchor} />
-
-              </Col>
-           
             </Row>
           </div>
         </section>
-     
+        <MobileAnchor anchor={MarkView.Anchor} />
       </div>
     )
   }

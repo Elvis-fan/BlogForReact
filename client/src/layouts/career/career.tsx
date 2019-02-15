@@ -72,7 +72,7 @@ export default class Career extends React.Component<Props, any> {
                         <Col xs={{ span: 12 }}>
                             <article>
                                 <div>
-                                    <h1><a href={`/career/details/${topArticle.id}`}>{topArticle.title}</a></h1>
+                                    <h1><a href={`/career/article/${topArticle.id}`}>{topArticle.title}</a></h1>
                                 </div>
                                 <div className='font-6'>
                                     <span>{topArticle.author || 'MR-Liu'}   |  {topArticle.date}</span>
@@ -87,7 +87,7 @@ export default class Career extends React.Component<Props, any> {
                             {
                                 topArticles.map(article => (<article>
                                     <div>
-                                        <h1><a href={`/career/details/${article.id}`}>{article.title}</a></h1>
+                                        <h1><a href={`/career/article/${article.id}`}>{article.title}</a></h1>
                                     </div>
                                     <div className='font-6'>
                                         <span>{article.author || 'MR-Liu'}   |  {article.date}</span>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 export const Clock = () => {
     const [now, setNow] = useState(new Date())
-
     useEffect(() => {
         requestAnimationFrame(() => {
             setNow(new Date())

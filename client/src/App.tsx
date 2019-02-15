@@ -1,24 +1,32 @@
 import * as React from 'react'
 
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
-
+import { enquireScreen } from 'enquire-js'
 import { NavBar, Curtain } from './components/global'
 import { routes, privateRoutes } from 'src/routes'
 import { history, stores } from 'src/common/stores'
+import {isMobileAction} from './actions'
 import { getSignIn } from 'src/common/utils'
 import './App.less'
-class App extends React.Component {
+
+
+class App extends React.Component<any, any> {
+
+
+  componentDidMount() {
+    enquireScreen((b: boolean) => {
+      stores.dispatch(isMobileAction(!!b))
+    })
+  }
 
   public render() {
-    console.log(this.context)
     return (
-      <Provider store={stores}>
+      <ReduxProvider store={stores}>
         <ConnectedRouter history={history}>
           <div className='blog'>
-            <NavBar/>
-            
+            <NavBar />
             <Switch>
               {routes.map(route => <Route key={route.url} exact={route.exact} component={route.component} path={route.url} />)}
               {
@@ -35,7 +43,7 @@ class App extends React.Component {
             <Curtain />
           </div>
         </ConnectedRouter>
-      </Provider>
+      </ReduxProvider>
     )
   }
 }

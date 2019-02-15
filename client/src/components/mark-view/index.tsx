@@ -17,7 +17,7 @@ renderer.code = (code: string, language: string, isEscaped: boolean) =>
 marked.setOptions({ renderer })
 interface Props {
   text: string;
-  anchorable?: boolean;
+  anchorable?: number;
 }
 
 export class MarkView extends React.Component< Props & any,any>{
@@ -34,7 +34,7 @@ export class MarkView extends React.Component< Props & any,any>{
         arr.push([indentation, title])
       }
       return (
-        <Anchor className='mark-anchor' onClick={onClick}>
+        <Anchor className='mark-anchor' onClick={onClick} offsetTop={48}>
           {arr.map((n, i) => (
             <Link key={n[0]} href={`#${n[0]}`} title={n[1]} />
           ))}

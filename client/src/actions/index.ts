@@ -3,5 +3,6 @@ import { createAction } from 'redux-actions'
 import { User as UserModel } from 'src/models'
 export * from './articles'
 export * from './classes'
+export * from './mobile'
 
 export const signInAction = createAction(SIGN_IN_TYPE.FETCH, ((user: UserModel) => user))

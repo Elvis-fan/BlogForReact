@@ -8,7 +8,7 @@ export const Article = ({ item }: { item: ArticleModel }) => {
       <div className='article-title'>
         <div>
           <h2>
-            <a href={'/career/details/' + item.id}>{item.title}</a>
+            <a href={'/career/article/' + item.id}>{item.title}</a>
           </h2>
         </div>
         <div>
@@ -18,7 +18,7 @@ export const Article = ({ item }: { item: ArticleModel }) => {
       <div className='article-bri'>
         <p className='font-7'>{item.briefing}</p>
         <Button type='primary' ghost={true}>
-          <a href={`/career/details/${item.id}`}>阅读全文</a>
+          <a href={`/career/article/${item.id}`}>阅读全文</a>
         </Button>
       </div>
     </article>

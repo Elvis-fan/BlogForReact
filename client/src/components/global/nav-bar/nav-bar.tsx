@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { Row, Col, Menu, Icon } from 'antd'
 import { Link, withRouter } from 'react-router-dom'
-import { SearchInput } from 'src/components'
 import { connect } from 'react-redux'
+import { enquireScreen } from 'enquire-js'
 import logo from 'src/static/img/logo.png'
 import MobileMenu from 'rc-drawer'
-
 import { curtainAction } from 'src/components/global/curtain/action'
 import './nav-bar.less'
 import 'rc-drawer/dist/rc-drawer.css'
@@ -72,7 +71,8 @@ const NavBarMenus = ({
 const mapStateToProps = (state: any, ownProps: any) => {
   return {
     state: state.navBar.state,
-    path: state.routerReducer.payload.pathname
+    path: state.routerReducer.payload.pathname,
+    isMobile: state.isMobile.isMobile
   }
 }
 
@@ -104,6 +104,13 @@ class NavBar extends React.Component<any, any> {
     this.setState({ visible: !this.state.visible })
   }
   onScroll = (e: any) => {
+    const {isMobile} = this.props
+    if(!isMobile){
+      if (this.state.hide) {
+        this.setState({ hide: false })
+      }
+      return
+    }
     let scrollTop =
       (document.documentElement as any).scrollTop || document.body.scrollTop
     if (this.scrollTop > scrollTop) {
@@ -187,4 +194,4 @@ class NavBar extends React.Component<any, any> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(NavBar))
+)(withRouter(NavBar as any))

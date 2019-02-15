@@ -9,3 +9,4 @@ declare module 'draft-js-import-markdown'
 declare const stateFromMarkdown:() => void
 declare module 'rc-drawer/*'
 declare module 'rc-drawer'
+declare module 'enquire-js'
