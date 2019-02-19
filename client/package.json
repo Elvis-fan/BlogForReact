@@ -60,7 +60,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "build-dll": "webpack --config .\\config\\webpack.dll.config.js -p",
+    "build-dll": "webpack --config .\\config\\webpack.dll.config.js  --mode production -p",
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {

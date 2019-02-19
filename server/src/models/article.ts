@@ -1,5 +1,6 @@
 export interface Article {
   id: string
+  class: string
   title: string
   author: string
   cover: string
