@@ -12,12 +12,12 @@ const mapStateToProps = (state: any) => {
   const { article } = state.Articles
   return {
     article,
-    isMobile: state.isMobile.isMobile
+    isMobile: state.isMobile.isMobile,
   }
 }
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    fetchArticle: (id: string | number) => dispatch(articleAction(id))
+    fetchArticle: (id: string | number) => dispatch(articleAction(id)),
   }
 }
 
@@ -29,7 +29,7 @@ interface Props extends RouteComponentProps {
 
 @(connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 ) as any)
 export default class Article extends React.Component<Props, any> {
   componentWillMount() {

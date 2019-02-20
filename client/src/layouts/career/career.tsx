@@ -103,12 +103,10 @@ export default class Career extends React.Component<Props, any> {
                     <Row>
                         <Col xs={{ span: 24 }} sm={{ span: 14 }} md={{ span: 16 }}>
                             {
-                                mainArticles && mainArticles.map((article: any, index: number) => <Article key={index} item={article} />)
-                            }
+                                mainArticles && mainArticles.map((article: any, index: number) => <Article key={index} item={article} />)}
                             <Skeleton loading={loadingArticles} />
                             {
-                                !loadingArticles && <div className='font-5 read-more pointer' onClick={readMore}>阅读更多</div>
-                            }
+                                !loadingArticles && <div className='font-5 read-more pointer' onClick={readMore}>阅读更多</div>}
                         </Col>
                         <Col xs={{ span: 24 }} sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 2 }} className='career-menu'>
                             <summary className='title font-5'>
@@ -118,8 +116,7 @@ export default class Career extends React.Component<Props, any> {
                                 <Menu onClick={menuClick} mode='inline' defaultSelectedKeys={['1menu']} className='left'>
                                     <Menu.Item key={'1menu'} className='left'>全部</Menu.Item>
                                     {
-                                        classes && classes.map((classe: any) => <Menu.Item key={`${classe.id}menu`} className='left'>{classe.name}</Menu.Item>)
-                                    }
+                                        classes && classes.map((classe: any) => <Menu.Item key={`${classe.id}menu`} className='left'>{classe.name}</Menu.Item>)}
                                 </Menu>
                             </menu>
 

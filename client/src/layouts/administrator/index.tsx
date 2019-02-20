@@ -1,5 +1,4 @@
 
-
 import * as React from 'react'
 import { asyncComponent } from 'react-async-component'
 import { Loading } from 'src/components/global'

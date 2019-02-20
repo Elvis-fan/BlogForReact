@@ -41,9 +41,9 @@ interface Props {
   change?(editorState: any): void
   submit(editorState: any): void
 }
-export default class BlogEditor extends React.Component<Props, any>{
+export default class BlogEditor extends React.Component<Props, any> {
   state = {
-    editorState: BEditor.createEditorState(null, { unitImportFn })
+    editorState: BEditor.createEditorState(null, { unitImportFn }),
   }
   componentWillReceiveProps({ content }: Props) {
     if (!(content === this.state.editorState.toHTML())) {

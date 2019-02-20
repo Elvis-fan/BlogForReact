@@ -14,7 +14,7 @@ const careerState: CareerState = {
     classes: Array.prototype,
     mainArticles: Array.prototype,
     topArticles: Array.prototype,
-    loadingArticles: false
+    loadingArticles: false,
 
 }
 export const Career = (state: CareerState = careerState, action: Action) => {

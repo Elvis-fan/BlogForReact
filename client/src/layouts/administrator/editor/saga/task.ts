@@ -1,9 +1,9 @@
 import { put, call } from 'redux-saga/effects'
 import { ARTICLES_TYPE, TOP_ARTICLES_TYPE, ARTICLE_TYPE } from 'src/action-types'
 import {
-  fetchArticle as fetchArticleApi
+  fetchArticle as fetchArticleApi,
 } from 'src/api'
-export const editorClass = function* (action: any) {
+export const editorClass = function*(action: any) {
   try {
     if (action.payload.length > 0) {
       const article = action.payload[0]

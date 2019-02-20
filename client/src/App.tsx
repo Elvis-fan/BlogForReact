@@ -11,9 +11,7 @@ import {isMobileAction} from './actions'
 import { getSignIn } from 'src/common/utils'
 import './App.less'
 
-
 class App extends React.Component<any, any> {
-
 
   componentDidMount() {
     enquireScreen((b: boolean) => {

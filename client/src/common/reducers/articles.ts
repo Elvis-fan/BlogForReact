@@ -32,8 +32,8 @@ const defaultState: State = {
   loadingArticles: false,
   postingArticle: false,
   postArticle: {
-    status: 0
-  }
+    status: 0,
+  },
 }
 export const Articles = (state: State = defaultState, action: Action) => {
   switch (action.type) {

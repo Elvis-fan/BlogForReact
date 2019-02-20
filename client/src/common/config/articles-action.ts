@@ -3,5 +3,5 @@ export enum ARTICLES_ACTION {
   SAVE = '保存',
   PUBLISH = '发布',
   MOVE = '移动',
-  REMOVE = '删除'
+  REMOVE = '删除',
 }

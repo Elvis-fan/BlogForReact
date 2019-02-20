@@ -42,7 +42,7 @@ const MobileAnchor = (props: Props & any) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    isMobile: state.isMobile.isMobile
+    isMobile: state.isMobile.isMobile,
   }
 }
 

@@ -41,14 +41,14 @@ class SignInForm extends React.Component<any, any> {
                 {getFieldDecorator('name', {
                     rules: [{ required: true, message: '请输入用户名!' }],
                 })(
-                    <Input prefix={<Icon type='user' style={{ fontSize: 13 }} />} placeholder='用户名' />
+                    <Input prefix={<Icon type='user' style={{ fontSize: 13 }} />} placeholder='用户名' />,
                 )}
             </FormItem>
             <FormItem>
                 {getFieldDecorator('password', {
                     rules: [{ required: true, message: '请输入密码!' }],
                 })(
-                    <Input prefix={<Icon type='lock' style={{ fontSize: 13 }} />} type='password' placeholder='密码' />
+                    <Input prefix={<Icon type='lock' style={{ fontSize: 13 }} />} type='password' placeholder='密码' />,
                 )}
             </FormItem>
             <FormItem>
@@ -62,7 +62,7 @@ class SignInForm extends React.Component<any, any> {
 
 @(connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 ) as any)
 export default class Sign extends React.Component<Props, any> {
     form: any
@@ -106,4 +106,3 @@ export default class Sign extends React.Component<Props, any> {
         )
     }
 }
-

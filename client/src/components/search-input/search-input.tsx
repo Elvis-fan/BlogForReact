@@ -37,14 +37,14 @@ class SearchInput extends React.Component<SearchInputProps, any> {
     public props = {
         placeholder: 'Search',
         className: '',
-        style: {}
+        style: {},
 
     }
     public state = {
         data: [],
         value: '',
     }
-    constructor(props:SearchInputProps){
+    constructor(props: SearchInputProps) {
         super(props)
     }
     handleChange = (value: any) => {

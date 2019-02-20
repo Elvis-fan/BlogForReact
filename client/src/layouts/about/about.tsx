@@ -7,7 +7,7 @@ import * as aboutMy from './../../static/img/about_my.png'
 
 class About extends React.Component {
     scrollToAnchor = () => {
-        const anchorName='content'
+        const anchorName = 'content'
         if (anchorName) {
             // 找到锚点
             let anchorElement = document.getElementById(anchorName)

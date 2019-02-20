@@ -1,3 +1,4 @@
+import {ArticleStatus} from '@/enum/article-status'
 export interface Article {
   id: string
   class: string
@@ -8,5 +9,5 @@ export interface Article {
   date: Date | string
   briefing: string
   content: string
-  status: number// 0:草稿，1自动草稿，2待审核，3未来，4私密，5删除，6继承
+  status: ArticleStatus
 }

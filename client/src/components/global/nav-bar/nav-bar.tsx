@@ -11,24 +11,24 @@ import 'rc-drawer/dist/rc-drawer.css'
 const CMenus = [
   {
     label: '远行',
-    link: '/111'
+    link: '/111',
   },
   {
     label: '随笔',
-    link: '/222'
+    link: '/222',
   },
   {
     label: '生涯',
-    link: '/career'
+    link: '/career',
   },
   {
     label: '关于',
-    link: '/about'
+    link: '/about',
   },
   {
     label: '杂项',
-    link: '/'
-  }
+    link: '/',
+  },
 ]
 const NavBarMenus = ({
   menus,
@@ -36,7 +36,7 @@ const NavBarMenus = ({
   style,
   selected,
   onClick,
-  itemClass
+  itemClass,
 }: {
   menus: Array<{}>;
   mode?:
@@ -72,7 +72,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   return {
     state: state.navBar.state,
     path: state.routerReducer.payload.pathname,
-    isMobile: state.isMobile.isMobile
+    isMobile: state.isMobile.isMobile,
   }
 }
 
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   toggleCurtain: (id: string, action: string, callback: string) => {
     dispatch(curtainAction(id, callback))
     dispatch(curtainAction(action, id))
-  }
+  },
 })
 
 interface NavBarProps {
@@ -93,7 +93,7 @@ class NavBar extends React.Component<any, any> {
   scrollTop: number
   state = {
     hide: false,
-    visible: false
+    visible: false,
   }
   header: any
   componentDidMount() {
@@ -105,7 +105,7 @@ class NavBar extends React.Component<any, any> {
   }
   onScroll = (e: any) => {
     const {isMobile} = this.props
-    if(!isMobile){
+    if (!isMobile) {
       if (this.state.hide) {
         this.setState({ hide: false })
       }
@@ -193,5 +193,5 @@ class NavBar extends React.Component<any, any> {
 }
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withRouter(NavBar as any))

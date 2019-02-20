@@ -1,4 +1,4 @@
-import {CLOSE_MOBILE_ANCHOR,OPEN_MOBILE_ANCHOR,OPENING_MOBILE_ANCHOR} from './../action-types'
+import {CLOSE_MOBILE_ANCHOR, OPEN_MOBILE_ANCHOR, OPENING_MOBILE_ANCHOR} from './../action-types'
 const MobileAnchor = (state: {} = { state: 0 }, action: { type: string, action: string } = { type: '', action: '' }) => {
   
     switch (action.type) {

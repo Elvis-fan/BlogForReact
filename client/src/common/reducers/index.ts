@@ -10,6 +10,6 @@ import { MobileAnchor } from '@/layouts/article/components/mobile-anchor/reducer
 
 import { Sign } from './sign'
 const stores = combineReducers({
-    curtain, navBar, routerReducer, Career, Classes, Articles, Sign, MobileAnchor, isMobile
+  curtain, navBar, routerReducer, Career, Classes, Articles, Sign, MobileAnchor, isMobile,
 })
 export default stores

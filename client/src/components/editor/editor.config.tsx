@@ -20,34 +20,34 @@ const options = {
   syntaxs: [
     {
       name: 'JavaScript',
-      syntax: 'javascript'
+      syntax: 'javascript',
     }, {
       name: 'HTML',
-      syntax: 'html'
+      syntax: 'html',
     }, {
       name: 'CSS',
-      syntax: 'css'
+      syntax: 'css',
     }, {
       name: 'Java',
       syntax: 'java',
     }, {
       name: 'TypeScript',
-      syntax: 'typescript'
+      syntax: 'typescript',
     }, {
       name: 'Markdown',
-      syntax: 'markdown'
+      syntax: 'markdown',
     }, {
       name: 'jsx',
-      syntax: 'jsx'
+      syntax: 'jsx',
     }, {
       name: 'tsx',
-      syntax: 'tsx'
-    }
-  ]
+      syntax: 'tsx',
+    },
+  ],
 }
 const BEditor: any = BraftEditor
 BEditor.use(CodeHighlighter(options))
 BEditor.use(ColorPicker({
-  theme: 'light' // 支持dark和light两种主题，默认为dark
+  theme: 'light', // 支持dark和light两种主题，默认为dark
 }))
 export default BEditor

@@ -6,18 +6,18 @@ import './curtain.less'
 const mapStateToProps = (state: any) => {
     return {
         isVisible: state.curtain.type === ON_CURTAIN,
-        action: state.curtain.action
+        action: state.curtain.action,
     }
 }
 const mapDispatchToProps = (dispatch: any) => ({
     close: (id: string, action: string) => {
         dispatch(curtainAction(id, action))
         dispatch(curtainAction(action, id))
-    }
+    },
 })
 
-const Curtain=({close,action,isVisible}:any)=>{
-    const clean=()=>close(OFF_CURTAIN, action)
+const Curtain = ({close, action, isVisible}: any) => {
+    const clean = () => close(OFF_CURTAIN, action)
     // if(isVisible){
     //     document.body.style.overflow='hidden'
     // }else{

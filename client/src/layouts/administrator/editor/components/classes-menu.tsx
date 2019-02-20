@@ -41,8 +41,7 @@ const SubClasses = (value: ClassesModel, addShow: any, setAdd: any, ivalue: any,
       <ClasseItem v1={v1} setAdd={() => setAdd({ [value.id]: true })} postClasses={postClasses} delClass={delClass} />
     </Menu.Item>)}
     {
-      addShow && <Menu.Item disabled={true}><Input value={ivalue} onBlur={onBlur} onChange={change} autoFocus={addShow} onPressEnter={save} id={`addmenu${value.id}`} /></Menu.Item>
-    }
+      addShow && <Menu.Item disabled={true}><Input value={ivalue} onBlur={onBlur} onChange={change} autoFocus={addShow} onPressEnter={save} id={`addmenu${value.id}`} /></Menu.Item>}
   </Menu.SubMenu>
 }
 

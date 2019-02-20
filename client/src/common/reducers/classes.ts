@@ -9,7 +9,7 @@ interface State {
     classes: ClassesModel[]
 }
 const State: State = {
-    classes: Array.prototype
+    classes: Array.prototype,
 }
 export const Classes = (state: State = State, action: Action) => {
     let classes

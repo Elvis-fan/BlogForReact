@@ -7,7 +7,7 @@ import {
     postArticle as postArticleApi,
     postArticleStatus as postArticleStatusApi,
 } from 'src/api'
-export const fetchArticle = function* (action: any) {
+export const fetchArticle = function*(action: any) {
     try {
         yield put({ type: ARTICLE_TYPE.FETCH_REQUEST, payload: 123 })
         const response = yield call(fetchArticleApi, action.payload)
@@ -16,7 +16,7 @@ export const fetchArticle = function* (action: any) {
         yield put({ type: ARTICLE_TYPE.FETCH_FAILURE, payload: '123' })
     }
 }
-export const fetchArticles = function* (action: any) {
+export const fetchArticles = function*(action: any) {
     try {
         yield put({ type: ARTICLES_TYPE.FETCH_REQUEST, payload: 123 })
         const response = yield call(fetchArticlesApi, action.payload)
@@ -25,7 +25,7 @@ export const fetchArticles = function* (action: any) {
         yield put({ type: ARTICLES_TYPE.FETCH_FAILURE, payload: '123' })
     }
 }
-export const postArticle = function* (action: any) {
+export const postArticle = function*(action: any) {
     try {
         yield put({ type: POST_ARTICLES_TYPE.FETCH_REQUEST, payload: 123 })
         const { article } = action.payload
@@ -35,7 +35,7 @@ export const postArticle = function* (action: any) {
         yield put({ type: POST_ARTICLES_TYPE.FETCH_FAILURE, payload: '123' })
     }
 }
-export const postArticleStatus = function* (action: any) {
+export const postArticleStatus = function*(action: any) {
     try {
         yield put({ type: POST_ARTICLES_STATUS_TYPE.FETCH_REQUEST, payload: 123 })
         const response = yield call(postArticleStatusApi, action.payload)
@@ -44,7 +44,7 @@ export const postArticleStatus = function* (action: any) {
         yield put({ type: POST_ARTICLES_STATUS_TYPE.FETCH_FAILURE, payload: '123' })
     }
 }
-export const fetchTopArticles = function* (action: any) {
+export const fetchTopArticles = function*(action: any) {
     try {
         yield put({ type: TOP_ARTICLES_TYPE.FETCH_REQUEST, payload: 123 })
         const response = yield call(fetchTopArticlesApi, action.payload)

@@ -9,9 +9,9 @@ const history = createHistory()
 const middleware = routerMiddleware(history)
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const stores = createStore(reducers, /* preloadedState, */ composeEnhancers(
-    applyMiddleware(middleware, sagaMiddleware)
+    applyMiddleware(middleware, sagaMiddleware),
 ))
 sagaMiddleware.run(rootSaga)
 export {
-    history, stores
+    history, stores,
 }

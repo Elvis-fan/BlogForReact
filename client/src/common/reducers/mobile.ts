@@ -1,6 +1,6 @@
 export const MOBILE_CHANGE = '@@ismobile/MOBILE_CHANGE'
 const initialState = {
-  isMobile: false
+  isMobile: false,
 }
 export const isMobile = (state = initialState, { type, payload }: any = {}) => {
   if (type === MOBILE_CHANGE) {

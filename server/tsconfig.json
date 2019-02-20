@@ -18,6 +18,9 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "@/*": [
+        "./*"
+      ],
       "@config/*": [
         "config/*"
       ],

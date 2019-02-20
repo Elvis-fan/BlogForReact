@@ -43,7 +43,7 @@ interface Props extends RouteComponentProps {
     delClass(classes: ClassesModel): void
 }
 @(connect(mapStateToProps, mapDispatchToProps) as any)
-export default class Editor extends React.Component<Props, any>{
+export default class Editor extends React.Component<Props, any> {
     state: any = {
         classe: '',
         article: '',
@@ -189,10 +189,8 @@ export default class Editor extends React.Component<Props, any>{
                         {
                             classes && classes.map(clas => <MenuItemGroup className='a-move-menu' key={clas.id} title={clas.name}>
                                 {
-                                    clas.children && clas.children.map((child: any) => classe === child.id ? '' : <Menu.Item key={`move-${child.id}`}>{child.name}</Menu.Item>)
-                                }
-                            </MenuItemGroup>)
-                        }
+                                    clas.children && clas.children.map((child: any) => classe === child.id ? '' : <Menu.Item key={`move-${child.id}`}>{child.name}</Menu.Item>)}
+                            </MenuItemGroup>)}
                     </SubMenu>
                     <Menu.Item key={2}><Icon type='delete' />删除</Menu.Item>
                 </Menu>

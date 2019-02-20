@@ -20,12 +20,12 @@ interface Props {
   anchorable?: number;
 }
 
-export class MarkView extends React.Component< Props & any,any>{
-  static Anchor :any=({onClick}:any)=><div/>
-  htmlh:string=''
-  constructor(props: Props & any){
+export class MarkView extends React.Component< Props & any, any> {
+  static Anchor: any = ({onClick}: any) => <div/>
+  htmlh: string = ''
+  constructor(props: Props & any) {
     super(props)
-    MarkView.Anchor=({onClick}:any) => {
+    MarkView.Anchor = ({onClick}: any) => {
       let list = this.html.match(/<h[1-6]{1}\sid=[^>]*>([^<]*)/gi) || []
       let arr = []
       for (let li of list) {
@@ -42,11 +42,11 @@ export class MarkView extends React.Component< Props & any,any>{
       )
     }
   }
-  set html(text:string){
-    if(!text){
+  set html(text: string) {
+    if (!text) {
       return
     }
-    const {anchorable}=this.props
+    const {anchorable} = this.props
     let html = marked(text, { breaks: true })
     if (anchorable) {
       for (let i = 1; i < 7; i++) {
@@ -59,21 +59,21 @@ export class MarkView extends React.Component< Props & any,any>{
     }
     this.htmlh = html
   }
-  get html(){
+  get html() {
     return this.htmlh
   }
   
-  render(){
-    const {props}=this
-    const {text,...newProps}=props
+  render() {
+    const {props} = this
+    const {text, ...newProps} = props
     this.html = text
    
-    const {html}=this
+    const {html} = this
     return (
           <div className='markdown-view'
             {...newProps}
             dangerouslySetInnerHTML={{
-              __html: html
+              __html: html,
             }}
           />
     )

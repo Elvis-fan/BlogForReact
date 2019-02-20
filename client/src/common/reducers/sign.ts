@@ -13,7 +13,7 @@ const State: State = {
     password: void 0 as any,
     status: void 0 as any,
     token: void 0 as any,
-  }
+  },
 }
 export const Sign = (state: State = State, action: Action) => {
   switch (action.type) {

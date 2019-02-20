@@ -5,4 +5,3 @@ export const Skeleton = ({ loading, children }: { loading?: boolean, children?: 
   return <div>
     {loading ? articleSkeleton() : children}</div>
 }
-
