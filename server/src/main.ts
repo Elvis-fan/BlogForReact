@@ -6,7 +6,8 @@
 
 import { mongodbPool } from '@util/mongodb'
 import app from 'koa2_autowired_route'
-
+import monut from 'koa-mount'
+import graphqlHTTP from 'koa-graphql'
 // x-response-time
 app.use(async (ctx, next) => {
   const start = Date.now()
@@ -23,6 +24,11 @@ app.use(async (ctx, next) => {
   const ms = Date.now() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}`)
 })
+
+// app.use('/graphql', graphqlHTTP({
+//   schema: MyGraphQLSchema,
+//   graphiql: true
+// }))
 
 // response
 

@@ -1,0 +1,10 @@
+type Category {
+	id: ID!
+	pid: Int!
+	label: String!
+}
+
+extend type Query {
+	categorys(pid: Int): [Category!]
+}
+ 

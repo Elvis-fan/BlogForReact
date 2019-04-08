@@ -1,0 +1,43 @@
+@charset "utf-8";
+@import "~src/common/style/less/const.less";
+.sign-container {
+  height: calc(100vh - 48px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-content {
+  text-align: center;
+  width: 300px;
+  margin-top: -48px;
+  padding: 36px;
+  box-shadow: 0 0 93.5px 16.5px rgba(115, 110, 254, .1);
+  border-radius: 4px
+}
+
+.sign-logo {
+  vertical-align: top;
+  height: 44px;
+  margin-right: @s_spacing;
+}
+
+.sign-title {
+  text-decoration: underline @primary-color; // font-size: 33px;
+  // color: rgba(0, 0, 0, 0.85);
+  // font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  // font-weight: 600;
+}
+
+.sign-header {
+  margin-bottom: @l_spacing;
+}
+
+.sign-body div {
+  //margin-bottom: @l_spacing;
+}
+
+.sign-submit {
+  width: 100%;
+}

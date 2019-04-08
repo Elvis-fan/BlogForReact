@@ -1,0 +1,8 @@
+{
+  "tslint.autoFixOnSave": true,
+  "tslint.jsEnable": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "tslint.configFile": "./client/tslint.json",
+  "tslint.run": "onSave"
+}

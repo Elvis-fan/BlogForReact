@@ -1,0 +1,16 @@
+type Article {
+	id: ID!
+	category: String!
+	title: String!
+	author: String!
+	date: String!
+	briefing: String!
+	content: String!
+	status: Int!
+}
+extend type Query {
+	articles(category: String, page: Int!, size: Int!): [Article]
+}
+extend type Mutation {
+	putArticle(id: ID, category: String!, title: String!, author: String, content: String!): Article
+}
