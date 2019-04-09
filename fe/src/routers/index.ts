@@ -1,4 +1,4 @@
-import SiginIn from './../pages/sign'
+import SiginIn from '@/pages/sign'
 
 const routes = [
      {

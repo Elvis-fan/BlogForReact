@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.2.2",
+    "@createjs/tweenjs": "^2.0.0-beta.4",
     "@svgr/webpack": "4.1.0",
     "@types/jest": "24.0.11",
     "@types/node": "11.13.0",

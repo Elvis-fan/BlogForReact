@@ -1,0 +1,206 @@
+@charset "utf-8";
+@import "~antd/dist/antd.less";
+@import "~@/style/less/const.less";
+@import "./theme.less";
+html {
+  font-size: 10px;
+}
+
+body {
+  // position: relative;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  font-family: "Helvetica Neue For Number", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+html,body{
+
+  -webkit-overflow-scrolling: touch;
+}
+
+//文字大小设置
+@min-screen: 319px;
+@middle-screen: 767px;
+@max-screen: 1140px;
+@mobile-font-sizes: 0.27 0.25 0.23 0.21 0.19 0.17 0.15 0.13;
+@media (min-width: @min-screen) and (max-width: @middle-screen) {
+  html {
+    font-size: 4/15*100vw;
+  }
+  .font-loop(@font-sizes, @i: 1) when (@i <=length(@font-sizes)) {
+    .font-@{i} {
+      font-size: 4/15*100vw* extract(@font-sizes, @i);
+    }
+    h@{i} {
+      font-size: 4/15*100vw* extract(@font-sizes, @i);
+    }
+    .font-loop(@font-sizes, (@i + 1));
+  }
+  .font-loop(@mobile-font-sizes);
+  *{
+    font-size: 0.15vw;
+  }
+}
+
+// @font-sizes: 2.4rem 2.2rem 2rem 1.8rem 1.6rem 1.4rem 1.4rem 1.2rem 1rem;
+@PC-width: 360px;
+@media (min-width: 768px) {
+  html {
+    font-size: 4/15*@PC-width;
+  }
+  .font-loop(@font-sizes, @i: 1) when (@i <=length(@font-sizes)) {
+    .font-@{i} {
+      font-size: 4/15*@PC-width* extract(@font-sizes, @i);
+    }
+    h@{i} {
+      font-size: 4/15*@PC-width* extract(@font-sizes, @i);
+    }
+    .font-loop(@font-sizes, (@i + 1));
+  }
+  .font-loop(@mobile-font-sizes);
+}
+.content {
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .content {
+      padding-left: 0.1rem;
+      padding-right: 0.1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+      width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .content {
+      width: 940px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content {
+      width: 1140px;
+  }
+}
+// @min-font-size: 1.4rem;
+// @max-font-size: 1.8rem;
+// @min-screen: 600px;
+// @max-screen: 1200px;
+// :root {
+//     font-size: 10px;
+// }
+// article {
+//     font-size: @min-font-size;
+// }
+// @media (min-width: @min-screen) and (max-width: @max-screen) {
+//     article {
+//         font-size: calc(@min-font-size + (2 - 1.4) * ((100vw - @min-screen) / (1200 - 800)));
+//     }
+// }
+// @media (min-width: @max-screen) {
+//     article {
+//         font-size: @max-font-size;
+//     }
+// }
+//@media only screen and (max-width: 450px) and (min-width: 0){
+//  .about-wake img,.about-my img{
+//    height: 48vh!important;
+//  }
+//}
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.vertical {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.link {
+  &:hover {
+    color: @primary-color ;
+  }
+}
+
+//滚动条
+.scroll ul {
+  overflow: auto;
+}
+
+.scroll ul {
+  scrollbar-base-color: transparent;
+  scrollbar-3dlight-color: transparent;
+  scrollbar-highlight-color: transparent;
+  scrollbar-track-color: transparent;
+}
+
+
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.in-block {
+  display: inline-block;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+//h1,h2,h3,h4,h5,h6{
+//  line-height: 1;
+//}
+ul,
+ol {
+  list-style: none;
+}
+
+//ant补充样式
+.sel-left.ant-menu-inline .ant-menu-item:after,
+.sel-left.ant-menu-vertical .ant-menu-item:after {
+  right: auto;
+  left: 0;
+  border-left: 3px solid @primary-color;
+  border-right: none;
+  margin-right: 1px;
+}
+
+.ant-menu-inline .ant-menu-item,
+.ant-menu-vertical .ant-menu-item {
+  margin-right: 1px;
+}
+.ant-anchor-wrapper{
+  background-color: transparent;
+}
+
+
+//rc-drawer样式覆盖
+.drawer{
+  z-index:15;
+}

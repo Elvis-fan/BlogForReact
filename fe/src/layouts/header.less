@@ -1,0 +1,55 @@
+.header{
+  height: 48px;
+  line-height: 48px;
+  .container{
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    
+    // .logo{
+    //   transform: translateY(-35px);
+    //   animation:head .3s ease 0s;
+    //   animation-fill-mode: forwards;
+    // }
+    .menu{
+      display: flex;
+      width: 20vw;
+      justify-content: space-around;
+      // &>:nth-child(1){
+      //   transform: translateY(-35px);
+      //   animation:head .3s ease .1s;
+      //   animation-fill-mode: forwards;
+      // }
+      // &>:nth-child(2){
+      //   transform: translateY(-35px);
+      //   animation:head .3s ease .2s;
+      //   animation-fill-mode: forwards;
+      // }
+    }
+    // .contact-us{
+    //   transform: translateY(-35px);
+    //   animation:head .3s ease .3s;
+    //   animation-fill-mode: forwards;
+    // }
+    .header-down-item-loop(@i:1) when(@i <= 5){
+      .header-down-item-@{i}{
+        transform: translateY(-35px);
+        animation:head .3s ease (@i - 1)*0.3s;
+        animation-fill-mode: forwards;
+      }
+      .header-down-item-loop(@i + 1);
+    }
+
+    .header-down-item-loop();
+  }
+}
+
+@keyframes head{
+  from{
+    transform: translateY(-35px);
+  }
+  to{
+    transform: translateY(0px);
+  }
+}

@@ -10,9 +10,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import { client } from "./apollo";
 import { BrowserRouter } from "react-router-dom";
-function Home() {
-  return <h2>Home</h2>;
-}
+import BasicLayout from '@/layouts/basicLayout'
+import Home from '@/pages/home'
+import Blog from '@/pages/blog'
 
 const store = configureStore();
 class App extends Component {
@@ -22,14 +22,14 @@ class App extends Component {
         <ReduxProvider store={store}>
           <ConnectedRouter history={history}>
             <Switch>
-              {routes.map(route => (
-                  <Route
-                    key={route.url}
-                    exact={route.exact}
-                    component={route.component}
-                    path={route.url}
-                  />
-                ))}
+            <Route component={()=>{
+              return <BasicLayout>
+                <Switch>
+                <Route exact component={Home} path={'/'}/>
+                <Route exact component={Blog} path={'/blog'}/>
+                </Switch>
+              </BasicLayout>
+            }} path={'/'}/>
             </Switch>
           </ConnectedRouter>
         </ReduxProvider>

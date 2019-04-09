@@ -1,4 +1,4 @@
-import { AuthenticationError, UserInputError } from 'apollo-server'
+import { ValidationError, UserInputError } from 'apollo-server'
 import User from '@/models/user'
 import * as jwt from 'jsonwebtoken'
 import { Gql } from './../tools/graphql-decorator'
@@ -32,7 +32,7 @@ export default {
       }
       const isValid = await user.validatePassword(password)
       if (!isValid) {
-        throw new AuthenticationError('密码错误')
+        throw new ValidationError('密码错误')
       }
       return { token: createToken(user, secret, '30m') }
     },

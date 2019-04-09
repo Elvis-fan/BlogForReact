@@ -77,20 +77,6 @@ module.exports = function(webpackEnv) {
         ),
       },
       {
-        test: /\.less$/,
-
-        use: [
-          require.resolve('style-loader'),
-          require.resolve('css-loader'),
-          {
-            loader: require.resolve('less-loader'),
-            options: {
-              javascriptEnabled: true
-            }
-          }
-        ]
-      },
-      {
         loader: require.resolve('css-loader'),
         options: cssOptions,
       },
@@ -279,6 +265,7 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        '@': path.resolve(__dirname, './../src'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -426,7 +413,20 @@ module.exports = function(webpackEnv) {
                 getLocalIdent: getCSSModuleLocalIdent,
               }),
             },
-
+            {
+              test: /\.less$/,
+      
+              use: [
+                require.resolve('style-loader'),
+                require.resolve('css-loader'),
+                {
+                  loader: require.resolve('less-loader'),
+                  options: {
+                    javascriptEnabled: true
+                  }
+                }
+              ]
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.

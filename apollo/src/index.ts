@@ -9,8 +9,8 @@ import * as jwt from 'jsonwebtoken'
 // 获取用户
 const getMe = async (req) => {
   const token = req.headers.token
-
   if (token) {
+
     try {
       return await jwt.verify(token, 'process.env.SECRET')
     } catch (e) {
@@ -25,11 +25,6 @@ const server = new ApolloServer({
     settings: {
       'editor.theme': 'light',
     },
-    tabs: [{
-      headers: {
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoieGVvbiIsImlhdCI6MTU1NDcwNjUxMiwiZXhwIjoxNTU0NzA4MzEyfQ.MMq_IObCPM6ofvb3UNxOPWVy7XYS6DJs5PhMO8yvmPE',
-      },
-    }],
   },
   resolvers,
   context: async ({ req }) => {
